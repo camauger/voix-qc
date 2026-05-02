@@ -29,6 +29,3 @@ Thumbs.db
 
 # Netlify
 .netlify/
-
-# Documentation
-docs/*
