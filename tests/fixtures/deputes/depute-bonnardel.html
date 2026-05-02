@@ -1,0 +1,1658 @@
+
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+
+    <!-- Enonces d'inclusion de fichiers JS et CSS -->
+    
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta http-equiv="content-language" content="fr" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<link type="text/css" href="/styles/ResetCSS.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/AssNat.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/Reguliere.css" title="Reguliere"  rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/Moyenne.css" title="Moyenne" rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/Grande.css" title="Grande" rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/infoBulle.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jScrollPane.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jquery.treeview.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jquery.skinned-select.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/jquery.datePicker.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/Calendrier.min.css" rel="stylesheet" media="screen"  />
+<link href="/Images/favicon.ico" rel="shortcut icon" />
+
+<!-- Didomi -->
+<script type="text/javascript">window.gdprAppliesGlobally = false; (function () { (function (e, r) { var t = document.createElement("link"); t.rel = "preconnect"; t.as = "script"; var n = document.createElement("link"); n.rel = "dns-prefetch"; n.as = "script"; var i = document.createElement("link"); i.rel = "preload"; i.as = "script"; var o = document.createElement("script"); o.id = "spcloader"; o.type = "text/javascript"; o["async"] = true; o.charset = "utf-8"; var a = "https://sdk.privacy-center.org/" + e + "/loader.js?target_type=notice&target=" + r; if (window.didomiConfig && window.didomiConfig.user) { var c = window.didomiConfig.user; var s = c.country; var d = c.region; if (s) { a = a + "&country=" + s; if (d) { a = a + "&region=" + d } } } t.href = "https://sdk.privacy-center.org/"; n.href = "https://sdk.privacy-center.org/"; i.href = a; o.src = a; var p = document.getElementsByTagName("script")[0]; p.parentNode.insertBefore(t, p); p.parentNode.insertBefore(n, p); p.parentNode.insertBefore(i, p); p.parentNode.insertBefore(o, p) })("196da249-e5c8-4975-84d3-4b76bf16efd6", "UgnH3adf") })();</script>
+
+
+<!-- Feuilles de styles specifiques IE -->
+
+<!--[if lte IE 6]>
+    <link type="text/css" href="/styles/CorrectionsIE6.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+
+<!--[if IE 7]>
+    <link type="text/css" href="/styles/CorrectionsIE7.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+
+<!--[if IE 8]>
+    <link type="text/css" href="/styles/CorrectionsIE8.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+<link type="text/css" href="/styles/Impression.min.css" rel="stylesheet" media="print"  />
+
+<link type="text/css" href="/styles/Tableau.min.css" rel="stylesheet" media="screen"  />
+
+<script type="text/javascript" src="/scripts/jquery.js?version=1.2.6"></script>
+
+<script type="text/javascript" src="/scripts/jquery-ui.js?version=1.5.2"></script>
+
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-5X47H2N');</script> 
+<!-- End Google Tag Manager -->
+
+
+<script type="text/javascript"  >
+//<![CDATA[
+// Libellé du calendrier
+$.dpText = {
+	TEXT_PREV_YEAR		:	'Année précédente',
+	TEXT_PREV_MONTH		:	'Mois précédent',
+	TEXT_NEXT_YEAR		:	'Année suivante',
+	TEXT_NEXT_MONTH		:	'Mois suivant',
+	TEXT_CLOSE			:	'[x] Fermer',
+	TEXT_CHOOSE_DATE	:	'Choisir une date'
+}
+
+var _contenuLoading = '<img style="width: 16px;height: 16px;" src="/Images/lightbox/loading.gif" />&nbsp; Chargement en cours...';
+
+var _nbAnneeArchiveActivite = '3';
+// Voir Calendrier.js pour _dtSetStartDate
+var _dtSetEndDate = '2026-06-27';
+var intNombreAnneeArchiveActivite = 3;
+var langueCourante = 'fr';
+
+_initCalendrierTypeActiviteJSON = eval([{"NomTypeActivite":"Autres activités","Categorie":"D","Name":null,"Description":null},{"NomTypeActivite":"Conférences et points de presse","Categorie":"C","Name":null,"Description":null},{"NomTypeActivite":"Séances de l'Assemblée","Categorie":"A","Name":null,"Description":null},{"NomTypeActivite":"Séances des commissions","Categorie":"B","Name":null,"Description":null}]);name 
+_urlGetCalendrierDataJSON = '/WebMethod/Calendrier.aspx/GetCalendrier?langue=fr';
+_documentURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=Thumbnail&token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&MediaId=";
+_imageThumbnailURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=AlbumThumbnail&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_imageOriginaleURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_imageThumbnailDrapeauURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=ThumbnailDrapeau&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_lienContenuURL = "/fr/deputes/index";
+_extensionPagesDuSite = "html";
+_lienPatronUrlCommuniquePresse = '/fr/actualites-salle-presse/communiques/';
+_lienPatronUrlTranscription = '/fr/actualites-salle-presse/conferences-points-presse/';
+_lienPatronUrlEnDirect = '/fr/video-audio/index';
+_lienJournalDebat ='/fr/travaux-parlementaires/{0}.html';
+_lienJournalDebatCom ='/fr/travaux-parlementaires/commissions/{0}/journal-debats/index';
+_lienJournalDebatChmbr ='/fr/travaux-parlementaires/{0}';
+_listeObjetMetierPatronUrl = "DocumentGenerique:/fr/document/{0}.html|Commission:/fr/travaux-parlementaires/commissions/{0}/index.html|Mandat:/fr/travaux-parlementaires/mandats/{0}/index.html|Lien:/fr/lien/{0}.html|CommuniquePresse:/fr/actualites-salle-presse/communiques/{0}.html|Actualite:/fr/actualites-salle-presse/nouvelle/{0}.html|ConferencePointPresse:/fr/actualites-salle-presse/conferences-points-presse/{0}.html|Consultation:/fr/travaux-parlementaires/consultations/{0}.html|SeanceAssemblee:/fr/travaux-parlementaires/assemblee-nationale/{0}/index.html|ProjetLoi:/fr/travaux-parlementaires/projets-loi/projet-loi-{0}.html|VideoAudio:/fr/video-audio/{0}.html|Journal:/fr/travaux-parlementaires/{0}.html|SyndicationRSS:/fr/rss/{0}.html|Petition:/fr/exprimez-votre-opinion/petition/{0}/index.html|TermeEncyclopedique:/fr/patrimoine/lexique/{0}.html|SectionDelegation:/fr/diplomatie/{0}/{1}/index.html|Vote:/fr/travaux-parlementaires/registre-des-votes/{0}/index.html|Depute:/fr/deputes/{0}/index.html|Texte:/fr/{0}.html|Individu:/fr/patrimoine/anciens-parlementaires/{0}.html|";
+_lienAideSoutienTechnique = '/fr/aide/aide-recherche.html#javascript';
+
+var _urlGetCalendrierObtenirActiviteEnOndes = '/WebMethod/Calendrier.aspx/ObtenirActiviteEnOndes';
+var intervalleRafraichissementWebDiffusion = '60';
+var urlPageVideoAudio = '/fr/video-audio/index.html?activite={0}';
+var libelleDateDebutDu = 'Du';
+var libelleDateDebutVers = 'Vers';
+var libelleDateFinJusqua = 'jusqu\'à';
+var libelleDateFinAu = 'au';
+var libelleHeureFinA = 'à'
+var libelleDebutApresPeriodeCourante = 'début : après la période des affaires courantes de l\'Assemblée';
+var bulleAidePeriodeAffaireCourante = '<span class="btnInfoBulle sansControle"><a href="javascript:void(0)" class="sanssouligne"><img src="http://www.assnat.qc.ca/Images/btnInfoBulle.gif" title="Afficher l\'aide" alt="Afficher l\'aide"></a><span title="Début : après la période des affaires courantes de l\'Assemblée"></span></span>';
+var bulleAideApresAvisTravauxCommissions = '<span class="btnInfoBulle sansControle"><a href="javascript:void(0)" class="sanssouligne"> <img src="http://www.assnat.qc.ca/Images/btnInfoBulle.gif" title="Afficher l\'aide" alt="Afficher l\'aide"></a><span title="Début : après les avis touchant les travaux des commissions"></span></span>'
+var libelleActiviteReporteeDateUlterieure = 'Activité reportée à une date ultérieure';
+
+var libelleCalAPartirDe = 'À partir de';
+var libelleCalEnCours = 'En cours';
+var libelleCalDebut = 'Début';
+
+var libelleDuree = 'Durée :';
+
+    var libelleAucunVideo = "La recherche n’a donné aucun résultat.";
+    var libelleAucuneAutreActiviteEnDirect = "Aucune autre activité en direct."
+
+var libelleNombreResultat = 'Nombre de résultats&nbsp;';
+var libelleMotsCles = 'Mots clés';
+var libelleCategorie = 'Catégorie';
+var libelleSession = 'Session';
+var libelleDateOuPeriode = 'Date ou période&nbsp;: ';
+var libelleAPartirDu = 'À partir du';
+var libelleJusquAu = "Jusqu'au";
+
+
+
+var arrCalendrierLblGeneral = {
+                                "lblCalOuvrir": "Ouvrir",
+                                "lblCalFermerEntete": "Fermer"       
+                            };
+var arrCalLblJoursSemaine = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+var arrCalLblMoisAnnee = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+var arrCalLblMoisAnneeAbr = ['JA', 'FE', 'MR', 'AR', 'MA', 'JN', 'JL', 'AU', 'SE', 'OC', 'NO', 'DE'];
+var lblCalAucuneActivite = "Aucune activité au calendrier aujourd'hui.";
+var lblCalAucuneActiviteType = "Aucune activité de cette catégorie n'est prévue aujourd'hui."
+var lblCalDifficulteTechnique = "Le calendrier n'est pas accessible en ce moment. Veuillez réessayer dans quelques minutes.";
+var lblCalActPrivee = "Activité privée"; 
+var lblCalActSurInvitation = "Sur invitation";
+var lblCalActAnnulee = "Activité annulée"; 
+var lblCalEnDirect = "En direct";
+var lblCalTranscription = "Transcription";
+var lblCalCommunique = "Communiqué";
+var lblCalToutesActivites = "Toutes les activités";
+var lblCalVideo = "Vidéo";
+var lblCalAudio = "Audio";
+
+// Libellés du date picker
+
+    Date.dayNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    Date.abbrDayNames = ['DIM', 'LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM'];
+    Date.monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    Date.abbrMonthNames = ['JA', 'FE', 'MR', 'AR', 'MA', 'JN', 'JL', 'AU', 'SE', 'OC', 'NO', 'DE'];
+	Date.firstDayOfWeek = 7;
+
+
+// Libellés pour treeview - overrider dans les pages au besoin
+var lblOuvrirTout = 'Afficher tout le contenu';
+var lblFermerTout = 'Masquer tout le contenu';
+
+// Libelles pour paginateur
+var _lblPaginationPage = 'Page';
+var _lblPaginationDe = 'de';
+
+// URL drapeau generique 
+var _urlDrapeauGenerique = '/Images/Temp/icoDrapeaux.gif'
+
+// Pour visionneuse: libelle 'Image' utilise dans slimbox2.js
+var lblVisionneuseTermeImage = "Image {x} de {y}"; 
+
+// Libelle pour le bouton Fermer de la visionneuse
+var libelleCloseLink = "Fermer";
+
+// Libellés pour fermer les bulles d'aide
+var lblBulleAideFermer = "[x] Fermer";
+
+var urlBoutonCalendrier = '/Images/btnCalendrier.gif';
+
+
+var urlObtenirVisionneusePhotos = '/Gabarits/InfrastructuresAvecVisionneuse.aspx/ObtenirVisionneusePhotos';
+var lblAlbumPhotos = 'Album de photos';
+var lblAgrandir = 'Agrandir';
+
+// Le script d'effet ne fonctionne pas sous Internet Explorer, ce script distingue ie des autres fureteurs 
+ if ($.browser.msie) {
+    }
+    else {
+        document.write("<script type='text\/javascript' src='\/scripts/jquery.easing.min.js?version=1.3'><\/script>")
+    }
+//]]>
+ 
+    var valEtatDeputeAncienDeputes = "AncienDeputes";
+
+    var urlObtenirTypeTravauxParSessionLegislature = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeTravauxParSessionLegislature';
+    var urlObtenirTypeTravauxParPeriode = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeTravauxParPeriode';
+    var urlObtenirTypeDocumentParTypeTravaux = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeDocumentParTypeTravaux';
+    var urlObtenirSousCategorieVideoParCategorieVideo = '/Gabarits/RechercheAvancee.aspx/ObtenirSousCategorieVideoParCategorieVideo';
+    
+    var idsSectionRechercheTravauxParlementaires = ['9',
+                                                        '27',
+                                                        '29',
+                                                        '31',
+                                                        '33'];
+
+    var idCategorieDocumentJournauxDebats = '13'
+
+    var msgFormatDateInvalide = "Veuillez saisir une date valide selon le format aaaa-mm-jj.";
+    var msgPeriodeInvalide = "La date de début doit précéder la date de fin.";
+    var msgPeriodeDebutFutur = "La date doit être antérieure ou égale à la date du jour.";
+
+    $(document).ready(function(){
+        $("a").each(function(i, e) {
+            var href = $(e).attr('href');
+            if(href && href.search(/^http:/) == 0){
+                $(e).attr('href', "https:" + href.substring(5));
+            }
+        })
+
+        $("img").each(function (i, e) {
+            var src = $(e).attr('src');
+            if (src && src.search(/^http:/) == 0) {
+                $(e).attr('src', "https:" + src.substring(5));
+            }
+            if (src && src.search(/^https+:/) == 0) {
+                $(e).attr('src', "https:" + src.substring(src.indexOf(":") + 1));
+            }
+        })
+    });
+</script>
+
+<!-- Gestion des cookies. Documentation : http://stilbuero.de/jquery/cookie/ -->
+<script type="text/javascript" src="/scripts/jquery.cookie.min.js"></script>
+
+<!-- Corrige les problème de z-index d'Internet Explorer. Doc: http://brandonaaron.net/jquery/plugins/bgiframe/docs/ -->
+<script type="text/javascript" src="/scripts/jquery.bgiframe.min.js"></script>
+
+<!-- Permet la gestion de l'objet date. -->
+<script type="text/javascript" src="/scripts/date.min.js"></script>
+
+<!-- Génère des paneaux (Tabs) à partir d'une liste (ul li). info et doc: http://docs.jquery.com/UI/Tabs-->
+<script type="text/javascript" src="/scripts/ui.tabs.js"></script>
+
+<!-- Génère l'affichage dynamique d'un liste (ul li). info et doc: http://bassistance.de/jquery-plugins/jquery-plugin-treeview/ -->
+<script type="text/javascript" src="/scripts/jquery.treeview.pack.min.js"></script>
+
+<!-- Permet de modifier la feuille de style. info et doc:http://kelvinluck.com/article/switch-stylesheets-with-jquery -->
+<script type="text/javascript" src="/scripts/StyleSwitcher.min.js"></script>
+
+<!-- Permet de modifier l'apparence des selects. info et doc:http://www.lotsofcode.com/javascript-and-ajax/jquery-select-box-skin.htm -->
+<script type="text/javascript" src="/scripts/jquery.skinned-select.min.js"></script>
+
+<!-- Permet de créer des masques sur les formulaires info et doc:http://digitalbush.com/projects/masked-input-plugin/ -->
+<script type="text/javascript" src="/scripts/jquery.maskedinput-1.3.js"></script>
+
+<!-- Permet de générer un calendrier. docs et info : http://kelvinluck.com/assets/jquery/datePicker/v2/demo/datePickerLocalised.html -->
+<script type="text/javascript" src="/scripts/jquery.datePicker.js"></script>
+
+<!-- Permet de gérer les bulles d'aide en popup -->
+<script type="text/javascript" src="/scripts/BulleAide.min.js"></script>
+
+<!-- Permet de modifier l'apparence des scrollbars. info et doc: http://www.kelvinluck.com/assets/jquery/jScrollPane/jScrollPane.html -->
+<script type="text/javascript" src="/scripts/jScrollPane.min.js"></script>
+
+<!-- Permet d'utiliser des PNG transparent dans IE 6 et 5.5. info et doc: http://jquery.andreaseberhard.de/pngFix/ -->
+<script type="text/javascript" src="/scripts/jquery.pngFix.min.js"></script>
+
+<!-- Permet de trier et de paginer des tableaux. docs et info : http://tablesorter.com -->
+<script type="text/javascript" src="/scripts/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.tablesorter.pager.min.js"></script>
+
+<script type="text/javascript" src="/scripts/jquery.uilock.min.js"></script>
+
+<!-- script general -->
+<script type="text/javascript" src="/scripts/AssNat.min.js"></script>
+
+<script type="text/javascript" src="/Scripts/moment.min.js"></script>
+
+<!-- evenements et gestion du calendrier -->
+<script type="text/javascript" src="/scripts/Calendrier.min.js"></script>
+
+<!-- sert uniquement pour débugger les objets JSON. -->
+<script type="text/javascript" src="/scripts/json.min.js"></script>
+
+
+
+
+
+
+    <!-- Placeholder: permet d'ajouter des enonces specifiques dans le HEAD -->
+    
+    <script type="text/javascript" src="/scripts/Deputes.min.js"></script>
+
+
+    <!-- Feuille de style pour le layout de la page -->
+    
+    <link href="/styles/GabGauche-mCentre-l.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/styles/FicheDeputes.min.css" rel="stylesheet" type="text/css" media="screen" />
+
+
+    <!-- Placeholder: remplace automatiquement selon rubrique -->
+    <title>
+	
+            François Bonnardel - Assemblée nationale du Québec
+        
+</title>
+    <meta property="og:title" content="François&nbsp;Bonnardel - Assemblée nationale du Québec" />
+    <meta property="og:description" content="Député de Granby, Coalition avenir Québec, ministre de l’Immigration, de la Francisation et de l’Intégration, leader parlementaire du gouvernement." />
+    
+    <meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_289" />
+    <script type="text/javascript" src="/scripts/Recherche.min.js"></script></head>
+
+<!-- Placeholder: permet de specifier un tag body personnalise (default: <body>) -->
+<body>
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X47H2N" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<form method="post" action="/fr/deputes/bonnardel-francois-11/index.html" id="aspnetForm">
+<div>
+<input type="hidden" name="versionProgrammationEnCache" id="versionProgrammationEnCache" value="0" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNjA1MDkzMDg0D2QWAmYPZBYCAgMQZGQWBAIKD2QWAgIJD2QWCgIID2QWDmYPFgQeBWNsYXNzBQVhY3RpZh4EaHJlZgVEaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL2RlcHV0ZXMvYm9ubmFyZGVsLWZyYW5jb2lzLTExL2luZGV4Lmh0bWxkAgEPFgIfAQVJaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL2RlcHV0ZXMvYm9ubmFyZGVsLWZyYW5jb2lzLTExL2Jpb2dyYXBoaWUuaHRtbGQCAg8WAh8BBUxodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvZGVwdXRlcy9ib25uYXJkZWwtZnJhbmNvaXMtMTEvaW50ZXJ2ZW50aW9ucy5odG1sZAIDDxYCHwEFUmh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci9kZXB1dGVzL2Jvbm5hcmRlbC1mcmFuY29pcy0xMS9jb25mZXJlbmNlc0RlUHJlc3NlLmh0bWxkAgQPFgIfAQVLaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL2RlcHV0ZXMvYm9ubmFyZGVsLWZyYW5jb2lzLTExL3Byb2pldHNEZUxvaS5odG1sZAIFDxYCHwEFR2h0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci9kZXB1dGVzL2Jvbm5hcmRlbC1mcmFuY29pcy0xMS9kZXBlbnNlcy5odG1sZAIGDxYCHwEFSmh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci9kZXB1dGVzL2Jvbm5hcmRlbC1mcmFuY29pcy0xMS9jb29yZG9ubmVlcy5odG1sZAIJDw8WAh4HVmlzaWJsZWdkZAIMD2QWBgIBDxBkEBVQPzQzZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDMwIHNlcHRlbWJyZSAyMDI1IC0gOCBhdnJpbCAyMDI2KUQ0M2UgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjkgbm92ZW1icmUgMjAyMiAtIDEwIHNlcHRlbWJyZSAyMDI1KT40MmUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxOSBvY3RvYnJlIDIwMjEgLSAyOCBhb8O7dCAyMDIyKUI0MmUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjcgbm92ZW1icmUgMjAxOCAtIDEzIG9jdG9icmUgMjAyMSk7NDFlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDIwIG1haSAyMDE0IC0gMjMgYW/Du3QgMjAxOCk9NDBlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDMwIG9jdG9icmUgMjAxMiAtIDUgbWFycyAyMDE0KT4zOWUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgyMyBmw6l2cmllciAyMDExIC0gMSBhb8O7dCAyMDEyKUIzOWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTMgamFudmllciAyMDA5IC0gMjIgZsOpdnJpZXIgMjAxMSk8MzhlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDggbWFpIDIwMDcgLSA1IG5vdmVtYnJlIDIwMDgpPjM3ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDE0IG1hcnMgMjAwNiAtIDIxIGbDqXZyaWVyIDIwMDcpOjM3ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICg0IGp1aW4gMjAwMyAtIDEwIG1hcnMgMjAwNik6MzZlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjIgbWFycyAyMDAxIC0gMTIgbWFycyAyMDAzKTkzNmUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMiBtYXJzIDE5OTkgLSA5IG1hcnMgMjAwMSk9MzVlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjUgbWFycyAxOTk2IC0gMjEgb2N0b2JyZSAxOTk4KT8zNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjkgbm92ZW1icmUgMTk5NCAtIDEzIG1hcnMgMTk5Nik6MzRlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMTcgbWFycyAxOTk0IC0gMTcganVpbiAxOTk0KTozNGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxOSBtYXJzIDE5OTIgLSAxMCBtYXJzIDE5OTQpPzM0ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgyOCBub3ZlbWJyZSAxOTg5IC0gMTggbWFycyAxOTkyKTkzM2UgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICg4IG1hcnMgMTk4OCAtIDkgYW/Du3QgMTk4OSk/MzNlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDE2IGTDqWNlbWJyZSAxOTg1IC0gOCBtYXJzIDE5ODgpQDMyZSBsw6lnaXNsYXR1cmUsIDVlIHNlc3Npb24gKDE2IG9jdG9icmUgMTk4NCAtIDEwIG9jdG9icmUgMTk4NSk6MzJlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMjMgbWFycyAxOTgzIC0gMjAganVpbiAxOTg0KT0zMmUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICg5IG5vdmVtYnJlIDE5ODEgLSAxMCBtYXJzIDE5ODMpQTMyZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDMwIHNlcHRlbWJyZSAxOTgxIC0gMiBvY3RvYnJlIDE5ODEpOjMyZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxOSBtYWkgMTk4MSAtIDE4IGp1aW4gMTk4MSk9MzFlIGzDqWdpc2xhdHVyZSwgNmUgc2Vzc2lvbiAoNSBub3ZlbWJyZSAxOTgwIC0gMTIgbWFycyAxOTgxKUAzMWUgbMOpZ2lzbGF0dXJlLCA1ZSBzZXNzaW9uICgyNCBvY3RvYnJlIDE5ODAgLSAyNCBvY3RvYnJlIDE5ODApOTMxZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDYgbWFycyAxOTc5IC0gMTgganVpbiAxOTgwKUIzMWUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgyMSBmw6l2cmllciAxOTc4IC0gMjAgZsOpdnJpZXIgMTk3OSk+MzFlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoOCBtYXJzIDE5NzcgLSAyMiBkw6ljZW1icmUgMTk3NylFMzFlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDE0IGTDqWNlbWJyZSAxOTc2IC0gMjMgZMOpY2VtYnJlIDE5NzYpPTMwZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDE2IG1hcnMgMTk3NiAtIDE4IG9jdG9icmUgMTk3Nik/MzBlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMTggbWFycyAxOTc1IC0gMTkgZMOpY2VtYnJlIDE5NzUpPzMwZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDE0IG1hcnMgMTk3NCAtIDI4IGTDqWNlbWJyZSAxOTc0KUQzMGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjIgbm92ZW1icmUgMTk3MyAtIDIyIGTDqWNlbWJyZSAxOTczKT8yOWUgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgxNSBtYXJzIDE5NzMgLSAyNSBzZXB0ZW1icmUgMTk3Myk5MjllIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoNyBtYXJzIDE5NzIgLSAxNCBtYXJzIDE5NzMpQzI5ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDIzIGbDqXZyaWVyIDE5NzEgLSAyNCBkw6ljZW1icmUgMTk3MSk/MjllIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDkganVpbiAxOTcwIC0gMTkgZMOpY2VtYnJlIDE5NzApPjI4ZSBsw6lnaXNsYXR1cmUsIDVlIHNlc3Npb24gKDI0IGbDqXZyaWVyIDE5NzAgLSAxMiBtYXJzIDE5NzApQzI4ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDI1IGbDqXZyaWVyIDE5NjkgLSAyMyBkw6ljZW1icmUgMTk2OSlDMjhlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMjAgZsOpdnJpZXIgMTk2OCAtIDE4IGTDqWNlbWJyZSAxOTY4KUAyOGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgyMCBvY3RvYnJlIDE5NjcgLSAyMCBvY3RvYnJlIDE5NjcpQDI4ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxIGTDqWNlbWJyZSAxOTY2IC0gMTIgYW/Du3QgMTk2Nyk+MjdlIGzDqWdpc2xhdHVyZSwgNmUgc2Vzc2lvbiAoMjUgamFudmllciAxOTY2IC0gMTggYXZyaWwgMTk2NilAMjdlIGzDqWdpc2xhdHVyZSwgNWUgc2Vzc2lvbiAoMjIgb2N0b2JyZSAxOTY1IC0gMjMgb2N0b2JyZSAxOTY1KT0yN2UgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgyMSBqYW52aWVyIDE5NjUgLSA2IGFvw7t0IDE5NjUpQDI3ZSBsw6lnaXNsYXR1cmUsIDNlIHNlc3Npb24gKDE0IGphbnZpZXIgMTk2NCAtIDMxIGp1aWxsZXQgMTk2NCk8MjdlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjEgYW/Du3QgMTk2MyAtIDIzIGFvw7t0IDE5NjMpQTI3ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxNSBqYW52aWVyIDE5NjMgLSAxMSBqdWlsbGV0IDE5NjMpPjI2ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDEwIG5vdmVtYnJlIDE5NjAgLSAxMCBqdWluIDE5NjEpRTI2ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgyMCBzZXB0ZW1icmUgMTk2MCAtIDIyIHNlcHRlbWJyZSAxOTYwKT4yNWUgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgxOCBub3ZlbWJyZSAxOTU5IC0gMTggbWFycyAxOTYwKT0yNWUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgxOSBub3ZlbWJyZSAxOTU4IC0gNSBtYXJzIDE5NTkpQjI1ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDEzIG5vdmVtYnJlIDE5NTcgLSAyMSBmw6l2cmllciAxOTU4KUMyNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTQgbm92ZW1icmUgMTk1NiAtIDIxIGbDqXZyaWVyIDE5NTcpQjI0ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDE2IG5vdmVtYnJlIDE5NTUgLSAyMyBmw6l2cmllciAxOTU2KUEyMGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoNyBvY3RvYnJlIDE5MzYgLSAxMiBub3ZlbWJyZSAxOTM2KT4xOGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxMCBqYW52aWVyIDE5MzMgLSAxMyBhdnJpbCAxOTMzKUIxOGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMyBub3ZlbWJyZSAxOTMxIC0gMTkgZsOpdnJpZXIgMTkzMik8MTdlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoOCBqYW52aWVyIDE5MjkgLSA0IGF2cmlsIDE5MjkpPTE2ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDExIGphbnZpZXIgMTkyNyAtIDEgYXZyaWwgMTkyNyk8MTZlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoNyBqYW52aWVyIDE5MjYgLSAyNCBtYXJzIDE5MjYpQDE2ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxNyBkw6ljZW1icmUgMTkyMyAtIDE1IG1hcnMgMTkyNClCMTVlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMjQgb2N0b2JyZSAxOTIyIC0gMjkgZMOpY2VtYnJlIDE5MjIpPTE1ZSBsw6lnaXNsYXR1cmUsIDNlIHNlc3Npb24gKDEwIGphbnZpZXIgMTkyMiAtIDIxIG1hcnMgMTkyMik9MTVlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMTEgamFudmllciAxOTIxIC0gMTkgbWFycyAxOTIxKUQxNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTAgZMOpY2VtYnJlIDE5MTkgLSAxNCBmw6l2cmllciAxOTIwKT0xNGUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgyMSBqYW52aWVyIDE5MTkgLSAxNyBtYXJzIDE5MTkpQTE0ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDQgZMOpY2VtYnJlIDE5MTcgLSA5IGbDqXZyaWVyIDE5MTgpQzE0ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICg3IG5vdmVtYnJlIDE5MTYgLSAyMiBkw6ljZW1icmUgMTkxNik9MTNlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMTEgamFudmllciAxOTE2IC0gMTYgbWFycyAxOTE2KTsxM2UgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICg3IGphbnZpZXIgMTkxNSAtIDUgbWFycyAxOTE1KUIxM2UgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxMSBub3ZlbWJyZSAxOTEzIC0gMTkgZsOpdnJpZXIgMTkx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" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="FF330E36" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="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" />
+</div>
+    <div id="Wrap">
+
+        <!-- Utilitaires: impression, agrandir texte, recherche, etc -->
+        
+
+
+<script type="text/javascript">
+    var motCleDefaut = 'Rechercher';
+</script>
+
+<a name="haut"></a>
+<div id="enteteUtilitaire">
+    <div id="skip" class="skiplinks">
+        <a href="#ancreContenuPrincipal">Atteindre le contenu</a>
+        <a href="#ancreSousNavigation">Atteindre la navigation secondaire</a>               
+    </div>
+    <div class="listeUtilitaires listeUtilitaires2">
+        <ul>
+            <li class="Premier">
+                <a class="sanssouligne nePasRediriger icoMobile" href="https://m.assnat.qc.ca">
+                    <span class="styleHyperlien">Mobile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/fr/accueil/mediassociaux.html" class="sanssouligne icoMediasSociauxEntete">
+                    <span class="styleHyperlien" style="margin-right:45px;">Suivez-nous</span>
+                    <span class="visuallyhidden"> sur les médias sociaux, Facebook, X, Youtube</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="listeUtilitaires">
+        <ul>
+            <li><a id="A2" href="https://www.assnat.qc.ca/carrieres">Carrières</a></li>
+            <li><a href="/fr/nous-joindre.html" id="ctl00_Utilitaires_A1">Nous joindre</a></li>
+            <li>
+                <div class="outilRecherche">
+                    <label for="ctl00_Utilitaires_motCle" class="nepasafficher">Saisir un mot clé pour faire une recherche générale</label>
+                    <input type="text" id="ctl00_Utilitaires_motCle" class="outilRechercheMotCle" />
+                    <input onclick="RechercherMotCle();return false;" type="image" src="/Images/btnRecherche_of.gif" class="btnRechercheGlobal" title="Rechercher" alt="Rechercher"/>
+                </div>
+            </li>
+            <li>
+                <a onclick="LancerRechercheAvancee();return false;" tabindex="0">Recherche avancée</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    function RechercherMotCle() {
+        var mot = $('#ctl00_Utilitaires_motCle');
+        if (mot.val() != "")
+        {
+            window.location = '/fr/recherche/recherche-avancee.html?SectionRecherche=-1&MotsCles=' + encodeURIComponent(htmlEscape(mot.val()));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var link = document.querySelector('a[onclick="LancerRechercheAvancee();return false;"]');
+
+        link.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                LancerRechercheAvancee();
+                event.preventDefault();
+            }
+        });
+    });
+
+    function LancerRechercheAvancee() {
+        var urlRechercheAvancee = '/fr/recherche/recherche-avancee.html';
+        window.location = urlRechercheAvancee + "?EstNouvelleRecherche=true";
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Banniere: image d'entete -->
+        
+<div id="Banniere">
+	<a href="/fr/index.html" class="sanssouligne" title="Assemblée nationale du Québec - Retour à l&#39;accueil">
+    <img class="nepasafficher" width="88" height="58" title="Assemblée nationale du Québec - Retour à l'accueil" alt="Assemblée nationale du Québec - Retour à l'accueil" src='/images/transparent.gif' /></a>
+</div>
+
+
+        <!-- NavigationPrincipale: menu horizontal -->
+        
+
+<div id="NavigationPrincipaleConteneur">
+    <div id="NavPrincipaleNiveau1">
+        <ul>
+            <li class="btnAccueil">
+                <a href="/fr/index.html" id="ctl00_NavigationPrincipale_hrfAcceuil">
+                    Accueil</a></li>
+            <li aria-haspopup="true" class='menuHoverParent btnDeputes'><a href="/fr/deputes/index.html" id="ctl00_NavigationPrincipale_hrfDeputes">
+                Députés</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10006.html">La présidente</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10002.html#listeDeputes">Liste des députés en fonction</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11861.html">Les députés depuis 1764</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10002.html#listeDeputes">Coordonnées des députés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10042.html">La fonction de député</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10014.html">Fonctions parlementaires des députés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10020.html">Composition des commissions</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10028.html">Membres du Bureau de l'Assemblée</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10052.html">Indemnités et allocations</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/deputes/cerclefemmes/index.html">Cercle des femmes parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12661.html">Cercle des jeunes parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10965.html">Cercle des ex-parlementaires de l’Assemblée nationale du Québec</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12603.html">Fondation Jean-Charles-Bonenfant </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12605.html">Fondation des parlementaires québécois Cultures à partager </a></li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnTravaux'>
+                <a href="/fr/travaux-parlementaires/index.html" id="ctl00_NavigationPrincipale_hrfTravauxParlementaires">
+                    Travaux parlementaires</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12119.html">Calendrier hebdomadaire des travaux</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12213.html">Journal des débats</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11867.html">Index du Journal des débats</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10114.html#procedure">Règlement et autres règles de procédure de l'Assemblée nationale</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10114.html#procedure">Propos non parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10044.html">Assister aux travaux</a></li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10118.html">Travaux de l'Assemblée</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10118.html">Toutes les séances</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10198.html">Documents déposés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10192.html">Projets de loi</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12215.html">Cheminement des projets de loi</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12779.html">Registre des votes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Travaux des commissions</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Liste des commissions</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11185.html">Mandats en cours</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10198.html">Documents déposés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10140.html">Rapports et documents de réflexion</a></li>
+</ul>
+</li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnExprimez'>
+                <a href="/fr/exprimez-votre-opinion/index.html" id="ctl00_NavigationPrincipale_hrfExprimezVotreOpinion">
+                    Exprimez votre opinion!</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10999.html">Pétitions</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11001.html">Signer une pétition électronique</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11003.html">Consulter une pétition présentée à l'Assemblée</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10108.html">Lancer une pétition</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/cheminement-petition">Suivre le cheminement d'une pétition</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10901.html">Consultations publiques</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10901.html#CommentParticiper">Comment participer à une consultation</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Liste des consultations publiques</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10997.html">Commenter un sujet à l'étude</a></strong></li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10110.html">Présenter un projet de loi d'intérêt privé</a></strong></li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnVideoAudio'>
+                <a href="/fr/video-audio/index.html" id="ctl00_NavigationPrincipale_hrfVideoAudio">
+                    Vidéo</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12541.html"><strong>En direct et webdiffusions à venir</strong></a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12543.html"><strong>Archives des travaux et activités parlementaires</strong></a> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12545.html">Travaux de l'Assemblée </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12559.html">Travaux des commissions</a> </li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12547.html">Activités de presse </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12549.html">Activités spéciales et institutionnelles</a> </li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12551.html">Députés</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12553.html"><strong>Le Canal de l'Assemblée</strong></a> </li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12555.html"><strong>Émissions et capsules promotionnelles</strong></a></li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12561.html"><strong>Espace jeunesse</strong></a> </li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11183.html"><strong>Commander un extrait</strong></a> </li>
+</ul>
+                        
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- PlaceHolder: permet de masquer le calendrier sommaire (defaut: s'affiche) -->
+        
+				
+
+<script type="text/javascript">
+</script>
+
+<div class="calendrier calSommaire" id="Calendrier">
+    <div class="titreCalendrier" id="TitreCalendrier">
+        <ul>
+            <li class="btnCalendrier" id="btnCalendrier">
+                <a href="javascript:void(0)" id="ctl00_CalendrierSommaire_CalendrierSommaire1_LienCalendrier">
+                    Calendrier
+                    <p class="libelleOuvrirFermer">
+                    Ouvrir</p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="contenuCalendrier" id="ContenuCalendrier">
+        <div class="contenuCalendrierInterne" style="display: none">
+            <div class="overlayCalendrier">
+                <p class="contenuOverlay">
+                    <img src="/Images/lightbox/loading.gif" alt="Chargement en cours"
+                        title="Chargement en cours" />
+                </p>
+            </div>
+            <div class="blocAssembleeEnDirect">
+                <ul class="listeIconesHorizontale">
+                    <li id="IconeEnDirectCalendrier" class="icoEnDirectInactif"><span id="spnEnDirectCalendrier" tabindex="0">
+                        En direct</span></li>
+                    <li><a class="anchorCalendrierDetaille" href='/fr/calendrier-detaille.html'>
+                        Calendrier détaillé</a></li>
+                </ul>
+            </div>
+            <div class="blocNavigateurDates">
+                <div>
+                    <p id="ConteneurCalendrierPopup">
+                        <span class="calendrierPopup"></span>
+                    </p>
+                    <h2 id="TitreDateDuJour">_date_du_jour
+                    </h2>
+                </div>
+                <ul>
+                    <li class="versGauche"><a href="#" class="dateNavigateur fleche" id="dateNavGauche"><img alt="Semaine précédente" title="Semaine précédente"
+                        src='/Images/transparent.gif' width="15" height="25"/></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavDi" title="_dimanche" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">DIM</span><br />
+                        <span class="libelleDate">6</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavLu" title="_lundi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">LUN</span><br />
+                        <span class="libelleDate">7</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavMa" title="_mardi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">MAR</span><br />
+                        <span class="libelleDate">8</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavMe" title="_mercredi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">MER</span><br />
+                        <span class="libelleDate">9</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavJe" title="_jeudi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">JEU</span><br />
+                        <span class="libelleDate">10</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavVe" title="_vendredi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">VEN</span><br />
+                        <span class="libelleDate">11</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavSa" title="_samedi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">SAM</span><br />
+                        <span class="libelleDate">12</span></a></li>
+                        
+                    <li class="versDroite"><a href="#" class="dateNavigateur fleche" id="dateNavDroite">
+                        <img alt="Semaine suivante" title="Semaine suivante"
+                        src='/Images/transparent.gif' width="15" height="25"/></a></li>
+                </ul>
+                <span class="aujourdhui"><a class="aujourdhuiLien" href=''>
+                    Aujourd'hui</a></span>
+            </div>
+            <hr />
+            <div class="blocEnCours" style="display: none">
+                <div class="blocEnCoursTitre">
+                    <h3 id="HeureEnCours" class="heure">_heure_en_cours
+                    </h3>
+                    <h3>
+                        En cours</h3>
+                </div>
+                <div class="boiteDefilante">
+                </div>
+            </div>
+            <div class="blocActivitesDuJour">
+                <h3><label for="ctl00_CalendrierSommaire_CalendrierSommaire1_selectFiltreCategorieActivite">Activités du jour</label></h3>
+                <div class="my-skinnable-select">
+                    <select name="ctl00$CalendrierSommaire$CalendrierSommaire1$selectFiltreCategorieActivite" id="ctl00_CalendrierSommaire_CalendrierSommaire1_selectFiltreCategorieActivite" class="selectFiltreCategorieActivite">
+	<option selected="selected" value="*"></option>
+
+</select>
+                </div>
+                <div class="boiteDefilante">
+                </div>
+            </div>
+            <div class="blocExpositions" style="display: none">
+                <h3>
+                    Exposition(s)</h3>
+                <div id="listeExpositions">
+                </div>
+            </div>
+            <div class="blocSurLesTours" id="BlocSurLesTours" style="display: none">
+                <h3>
+                    Drapeau(x) sur l'hôtel du Parlement</h3>
+                <div id="listeDrapeaux">
+                </div>
+            </div>
+        </div>
+        <p id="calendrierNoJs">
+            L'utilisation du calendrier requiert que Javascript soit activé dans votre navigateur.<br />
+            <a href='/fr/aide/aide-recherche.html#javascript'>
+                Pour plus de renseignements</a>
+        </p>
+    </div>
+</div>
+
+			
+
+        <!-- NavigationPrincipaleNiveau2: menu horizontal -->
+        
+
+<div id="NavigationPrincipaleNiveau2Conteneur">
+    <div id="NavPrincipaleNiveau2">
+        <ul>
+            <li class='' id="lienABC"><a href="/fr/abc-assemblee/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfABCDeLassemblee">
+                L'ABC de l'Assemblée</a></li>
+            <li class='' id="lienVisiteurs"><a href="/fr/visiteurs/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfVisiteurs">
+                Visiteurs</a></li>
+            <li class='' id="lienRestaurants"><a href="/fr/visiteurs/restaurants/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfRestaurants">
+                Restaurants</a></li>
+            <li class='' id="lienActualites"><a href="/fr/actualites-salle-presse/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfActualiteEtSalleDePresse">
+                Actualités et salle de presse</a></li>
+            <li class='' id="lienBibliotheque">
+                <a href="/fr/bibliotheque/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfBibliotheque">
+                    Bibliothèque</a></li>
+            <li class='' id="lienPublications">
+                <a href="/fr/publications/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfPublications">
+                    Publications</a></li>
+            <li class='' id="lienEducatives">
+                <a href="http://www.paricilademocratie.com" id="ctl00_NavigationPrincipaleNiveau2_hrfActivitesEducatives">
+                    Éducation</a></li>
+            <li class='' id="lienInternational">
+                <a href="/fr/diplomatie/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfInternational">
+                    Diplomatie</a></li>
+            <li class='' id="lienHistoire"><a href="/fr/patrimoine/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfHistoire">
+                Histoire</a></li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- FilAriane: affiche le fil d'ariane -->
+        
+				
+<div id="FilAriane" class="FilAriane">
+<span id="ctl00_FilAriane_FilAriane1_SiteMapPath1"><span><a href="/fr/index.html">Accueil</a></span><span> &gt; </span><span><a href="/fr/deputes/index.html">D&#233;put&#233;s</a></span><span> &gt; </span><span>Fran&#231;ois Bonnardel</span></span>
+</div>
+			
+
+        
+            
+
+        <!-- Ancre pour le "skiplink atteindreSousNavigation" -->
+        <div id="divAncreSousNavigation" class="skipLinks">
+            <a name="ancreSousNavigation" id="ancreSousNavigation"></a>
+        </div>
+
+        <div class="ColGauche colonne">
+
+            <!-- PlaceHolder: permet de masquer la navigation secondaire (defaut: s'affiche) -->
+            
+                    
+<div id="SousNavigation" class="ContenuNavigation SousNavigation">
+
+
+	
+	<ul>
+		<li>
+			<h2><a href="/fr/deputes/index.html" class="selected">
+				Députés</a></h2>
+			<ul>
+				<li>
+					<a href="/fr/deputes/president-assemblee.html" class="">
+						La présidente de l’Assemblée nationale</a>
+					<ul>
+						<li>
+							<a href="/fr/deputes/president-assemblee/triple-role.html" class="">
+								Le triple rôle de la présidence</a>
+						</li>
+						<li>
+							<a href="/fr/deputes/president-assemblee/evolution-presidence.html" class="">
+								L'évolution de la présidence</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/deputes/fonctions-parlementaires-ministerielles/fonctions-parlementaires.html" class="">
+						Fonctions parlementaires et ministérielles</a>
+					<ul>
+						<li>
+							<a href="/fr/deputes/fonctions-parlementaires-ministerielles/composition-commissions.html" class="">
+								Composition des commissions</a>
+						</li>
+						<li>
+							<a href="/fr/deputes/fonctions-parlementaires-ministerielles/conseil-ministres.html" class="">
+								Conseil des ministres</a>
+						</li>
+						<li>
+							<a href="/fr/deputes/fonctions-parlementaires-ministerielles/membres-bureau-assemblee.html" class="">
+								Membres du Bureau de l'Assemblée</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/deputes/rapports-des-depenses/index.html" class="">
+						Rapports de dépenses</a>
+					<ul>
+						<li>
+							<a href="/fr/deputes/rapports-des-depenses/deputes-cabinets.html" class="">
+								Dépenses des députés, des cabinets et des services de recherche</a>
+						</li>
+						<li>
+							<a href="/fr/deputes/rapports-des-depenses/foire-aux-questions.html" class="">
+								Foire aux questions</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/deputes/statistiques-deputes.html" class="">
+						Portrait statistique des parlementaires</a>
+				</li>
+				<li>
+					<a href="/fr/deputes/cerclefemmes/index.html" class="">
+						Cercle des femmes parlementaires</a>
+				</li>
+				<li>
+					<a href="/fr/deputes/cerclejeunes/index.html" class="">
+						Cercle des jeunes parlementaires</a>
+				</li>
+				<li>
+					<a href="/fr/deputes/fondation-jean-charles-bonenfant.html" class="">
+						Fondation Jean-Charles-Bonenfant</a>
+				</li>
+				<li>
+					<a href="/fr/deputes/fondation-cultures-a-partager.html" class="">
+						Fondation des parlementaires québécois Cultures à partager</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	
+  <div class="clear"></div>
+</div>
+
+
+<script type="text/javascript">
+
+</script>        
+				
+
+            <!-- PlaceHolder: permet d'ajouter du contenu sous la navigation secondaire (defaut: vide) -->
+            
+    
+    <div class="clear">
+    </div>
+    <div class="ContenuNavigation SousNavigation rechercheDeputes rechercheContextuelle">
+        <h2>
+            Recherche avancée dans la section Députés</h2>
+            
+            <fieldset>
+                <legend>Trouver un député</legend>
+
+                <div class="conteneurMotCle" data-champ="MotsCles">
+                    <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixCirconscription" >Mots clés</label>
+			        <input name="ctl00$ColGauche$RechercheDeputes$txtMotsCles" type="text" id="ctl00_ColGauche_RechercheDeputes_txtMotsCles" />
+		        </div>
+
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixEtatDepute">Sélection d'un groupe</label>
+                <div class="my-skinnable-select" id="choixDepute" data-champ="EtatDepute">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixEtatDepute" id="ctl00_ColGauche_RechercheDeputes_ddlChoixEtatDepute" title="Dans le cas d’anciens députés, la recherche porte sur les ex-députés faisant partie du Parlement du Québec depuis 1764." class="choixDepute BulleInfo">
+	<option value="DeputesEnFonctions">D&#233;put&#233;s en fonction</option>
+	<option value="AncienDeputes">Anciens d&#233;put&#233;s</option>
+
+</select>
+                </div>
+
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixCirconscription" >Circonscription</label>
+                <div class="my-skinnable-select" data-champ="Circonscription">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixCirconscription" id="ctl00_ColGauche_RechercheDeputes_ddlChoixCirconscription">
+	<option selected="selected" value="-1">Toutes les circonscriptions</option>
+	<option value="1" title="Abitibi-Est">Abitibi-Est</option>
+	<option value="3" title="Abitibi-Ouest">Abitibi-Ouest</option>
+	<option value="5" title="Acadie">Acadie</option>
+	<option value="267" title="Anjou–Louis-Riel">Anjou–Louis-Riel</option>
+	<option value="9" title="Argenteuil">Argenteuil</option>
+	<option value="11" title="Arthabaska">Arthabaska</option>
+	<option value="13" title="Beauce-Nord">Beauce-Nord</option>
+	<option value="15" title="Beauce-Sud">Beauce-Sud</option>
+	<option value="17" title="Beauharnois">Beauharnois</option>
+	<option value="19" title="Bellechasse">Bellechasse</option>
+	<option value="21" title="Berthier">Berthier</option>
+	<option value="23" title="Bertrand">Bertrand</option>
+	<option value="25" title="Blainville">Blainville</option>
+	<option value="27" title="Bonaventure">Bonaventure</option>
+	<option value="29" title="Borduas">Borduas</option>
+	<option value="31" title="Bourassa-Sauvé">Bourassa-Sauv&#233;</option>
+	<option value="35" title="Brome-Missisquoi">Brome-Missisquoi</option>
+	<option value="295" title="Camille-Laurin">Camille-Laurin</option>
+	<option value="37" title="Chambly">Chambly</option>
+	<option value="39" title="Champlain">Champlain</option>
+	<option value="41" title="Chapleau">Chapleau</option>
+	<option value="43" title="Charlesbourg">Charlesbourg</option>
+	<option value="273" title="Charlevoix–Côte-de-Beaupré">Charlevoix–C&#244;te-de-Beaupr&#233;</option>
+	<option value="47" title="Châteauguay">Ch&#226;teauguay</option>
+	<option value="49" title="Chauveau">Chauveau</option>
+	<option value="51" title="Chicoutimi">Chicoutimi</option>
+	<option value="53" title="Chomedey">Chomedey</option>
+	<option value="55" title="Chutes-de-la-Chaudière">Chutes-de-la-Chaudi&#232;re</option>
+	<option value="275" title="Côte-du-Sud">C&#244;te-du-Sud</option>
+	<option value="59" title="D&#39;Arcy-McGee">D&#39;Arcy-McGee</option>
+	<option value="61" title="Deux-Montagnes">Deux-Montagnes</option>
+	<option value="259" title="Drummond–Bois-Francs">Drummond–Bois-Francs</option>
+	<option value="65" title="Dubuc">Dubuc</option>
+	<option value="67" title="Duplessis">Duplessis</option>
+	<option value="69" title="Fabre">Fabre</option>
+	<option value="73" title="Gaspé">Gasp&#233;</option>
+	<option value="75" title="Gatineau">Gatineau</option>
+	<option value="77" title="Gouin">Gouin</option>
+	<option value="255" title="Granby">Granby</option>
+	<option value="79" title="Groulx">Groulx</option>
+	<option value="81" title="Hochelaga-Maisonneuve">Hochelaga-Maisonneuve</option>
+	<option value="83" title="Hull">Hull</option>
+	<option value="85" title="Huntingdon">Huntingdon</option>
+	<option value="87" title="Iberville">Iberville</option>
+	<option value="89" title="Îles-de-la-Madeleine">&#206;les-de-la-Madeleine</option>
+	<option value="91" title="Jacques-Cartier">Jacques-Cartier</option>
+	<option value="93" title="Jean-Lesage">Jean-Lesage</option>
+	<option value="97" title="Jean-Talon">Jean-Talon</option>
+	<option value="95" title="Jeanne-Mance–Viger">Jeanne-Mance–Viger</option>
+	<option value="99" title="Johnson">Johnson</option>
+	<option value="101" title="Joliette">Joliette</option>
+	<option value="103" title="Jonquière">Jonqui&#232;re</option>
+	<option value="121" title="L&#39;Assomption">L&#39;Assomption</option>
+	<option value="113" title="La Peltrie">La Peltrie</option>
+	<option value="115" title="La Pinière">La Pini&#232;re</option>
+	<option value="119" title="La Prairie">La Prairie</option>
+	<option value="107" title="Labelle">Labelle</option>
+	<option value="109" title="Lac-Saint-Jean">Lac-Saint-Jean</option>
+	<option value="111" title="LaFontaine">LaFontaine</option>
+	<option value="117" title="Laporte">Laporte</option>
+	<option value="123" title="Laurier-Dorion">Laurier-Dorion</option>
+	<option value="125" title="Laval-des-Rapides">Laval-des-Rapides</option>
+	<option value="285" title="Laviolette–Saint-Maurice">Laviolette–Saint-Maurice</option>
+	<option value="287" title="Les Plaines">Les Plaines</option>
+	<option value="129" title="Lévis">L&#233;vis</option>
+	<option value="261" title="Lotbinière-Frontenac">Lotbini&#232;re-Frontenac</option>
+	<option value="133" title="Louis-Hébert">Louis-H&#233;bert</option>
+	<option value="135" title="Marguerite-Bourgeoys">Marguerite-Bourgeoys</option>
+	<option value="139" title="Marie-Victorin">Marie-Victorin</option>
+	<option value="141" title="Marquette">Marquette</option>
+	<option value="143" title="Maskinongé">Maskinong&#233;</option>
+	<option value="145" title="Masson">Masson</option>
+	<option value="279" title="Matane-Matapédia">Matane-Matap&#233;dia</option>
+	<option value="289" title="Maurice-Richard">Maurice-Richard</option>
+	<option value="253" title="Mégantic">M&#233;gantic</option>
+	<option value="153" title="Mercier">Mercier</option>
+	<option value="155" title="Mille-Îles">Mille-&#206;les</option>
+	<option value="157" title="Mirabel">Mirabel</option>
+	<option value="291" title="Mont-Royal–Outremont">Mont-Royal–Outremont</option>
+	<option value="257" title="Montarville">Montarville</option>
+	<option value="161" title="Montmorency">Montmorency</option>
+	<option value="165" title="Nelligan">Nelligan</option>
+	<option value="265" title="Nicolet-Bécancour">Nicolet-B&#233;cancour</option>
+	<option value="169" title="Notre-Dame-de-Grâce">Notre-Dame-de-Gr&#226;ce</option>
+	<option value="171" title="Orford">Orford</option>
+	<option value="175" title="Papineau">Papineau</option>
+	<option value="177" title="Pointe-aux-Trembles">Pointe-aux-Trembles</option>
+	<option value="179" title="Pontiac">Pontiac</option>
+	<option value="181" title="Portneuf">Portneuf</option>
+	<option value="293" title="Prévost">Pr&#233;vost</option>
+	<option value="185" title="René-Lévesque">Ren&#233;-L&#233;vesque</option>
+	<option value="281" title="Repentigny">Repentigny</option>
+	<option value="187" title="Richelieu">Richelieu</option>
+	<option value="189" title="Richmond">Richmond</option>
+	<option value="191" title="Rimouski">Rimouski</option>
+	<option value="277" title="Rivière-du-Loup–Témiscouata">Rivi&#232;re-du-Loup–T&#233;miscouata</option>
+	<option value="195" title="Robert-Baldwin">Robert-Baldwin</option>
+	<option value="197" title="Roberval">Roberval</option>
+	<option value="199" title="Rosemont">Rosemont</option>
+	<option value="201" title="Rousseau">Rousseau</option>
+	<option value="203" title="Rouyn-Noranda–Témiscamingue">Rouyn-Noranda–T&#233;miscamingue</option>
+	<option value="205" title="Saint-François">Saint-Fran&#231;ois</option>
+	<option value="207" title="Saint-Henri–Sainte-Anne">Saint-Henri–Sainte-Anne</option>
+	<option value="209" title="Saint-Hyacinthe">Saint-Hyacinthe</option>
+	<option value="211" title="Saint-Jean">Saint-Jean</option>
+	<option value="269" title="Saint-Jérôme">Saint-J&#233;r&#244;me</option>
+	<option value="213" title="Saint-Laurent">Saint-Laurent</option>
+	<option value="215" title="Sainte-Marie–Saint-Jacques">Sainte-Marie–Saint-Jacques</option>
+	<option value="283" title="Sainte-Rose">Sainte-Rose</option>
+	<option value="263" title="Sanguinet">Sanguinet</option>
+	<option value="221" title="Sherbrooke">Sherbrooke</option>
+	<option value="223" title="Soulanges">Soulanges</option>
+	<option value="225" title="Taillon">Taillon</option>
+	<option value="227" title="Taschereau">Taschereau</option>
+	<option value="229" title="Terrebonne">Terrebonne</option>
+	<option value="231" title="Trois-Rivières">Trois-Rivi&#232;res</option>
+	<option value="233" title="Ungava">Ungava</option>
+	<option value="235" title="Vachon">Vachon</option>
+	<option value="271" title="Vanier-Les Rivières">Vanier-Les Rivi&#232;res</option>
+	<option value="239" title="Vaudreuil">Vaudreuil</option>
+	<option value="241" title="Verchères">Verch&#232;res</option>
+	<option value="243" title="Verdun">Verdun</option>
+	<option value="245" title="Viau">Viau</option>
+	<option value="247" title="Vimont">Vimont</option>
+	<option value="249" title="Westmount–Saint-Louis">Westmount–Saint-Louis</option>
+
+</select>
+                </div>
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixPartiPolitique" >Allégeance politique</label>
+                <div class="my-skinnable-select" data-champ="AllegeancePolitique">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixPartiPolitique" id="ctl00_ColGauche_RechercheDeputes_ddlChoixPartiPolitique">
+	<option selected="selected" value="-1">Tous les partis</option>
+	<option value="79" title="Coalition avenir Québec">Coalition avenir Qu&#233;bec</option>
+	<option value="7" title="Indépendant(e)">Ind&#233;pendant(e)</option>
+	<option value="41" title="Parti conservateur du Québec">Parti conservateur du Qu&#233;bec</option>
+	<option value="23" title="Parti libéral du Québec">Parti lib&#233;ral du Qu&#233;bec</option>
+	<option value="27" title="Parti québécois">Parti qu&#233;b&#233;cois</option>
+	<option value="33" title="Québec solidaire">Qu&#233;bec solidaire</option>
+
+</select>
+                </div>
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixTypeFonction" >Fonction parlementaire</label>
+                <div class="my-skinnable-select" data-champ="FonctionParlementaire">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixTypeFonction" id="ctl00_ColGauche_RechercheDeputes_ddlChoixTypeFonction" title="Fonctions parlementaires en activité." class="BulleInfo">
+	<option selected="selected" value="-1">Toutes les fonctions</option>
+	<option value="51" title="Adjoint(e) parlementaire">Adjoint(e) parlementaire</option>
+	<option value="5" title="Chef de l&#39;opposition officielle">Chef de l&#39;opposition officielle</option>
+	<option value="7" title="Chef du deuxième groupe d&#39;opposition">Chef du deuxi&#232;me groupe d&#39;opposition</option>
+	<option value="1061" title="Chef du troisième groupe d&#39;opposition">Chef du troisi&#232;me groupe d&#39;opposition</option>
+	<option value="13" title="Deuxième vice-président(e) de l&#39;Assemblée nationale">Deuxi&#232;me vice-pr&#233;sident(e) de l&#39;Assembl&#233;e nationale</option>
+	<option value="25" title="Leader parlementaire adjoint(e) de l&#39;opposition officielle">Leader parlementaire adjoint(e) de l&#39;opposition officielle</option>
+	<option value="27" title="Leader parlementaire adjoint(e) du deuxième groupe d&#39;opposition">Leader parlementaire adjoint(e) du deuxi&#232;me groupe d&#39;opposition</option>
+	<option value="23" title="Leader parlementaire adjoint(e) du gouvernement">Leader parlementaire adjoint(e) du gouvernement</option>
+	<option value="1063" title="Leader parlementaire adjoint(e) du troisième groupe d&#39;opposition">Leader parlementaire adjoint(e) du troisi&#232;me groupe d&#39;opposition</option>
+	<option value="19" title="Leader parlementaire de l&#39;opposition officielle">Leader parlementaire de l&#39;opposition officielle</option>
+	<option value="21" title="Leader parlementaire du deuxième groupe d&#39;opposition">Leader parlementaire du deuxi&#232;me groupe d&#39;opposition</option>
+	<option value="17" title="Leader parlementaire du gouvernement">Leader parlementaire du gouvernement</option>
+	<option value="1065" title="Leader parlementaire du troisième groupe d&#39;opposition">Leader parlementaire du troisi&#232;me groupe d&#39;opposition</option>
+	<option value="59" title="Membre d&#39;une commission">Membre d&#39;une commission</option>
+	<option value="63" title="Membre du Bureau de l&#39;Assemblée nationale">Membre du Bureau de l&#39;Assembl&#233;e nationale</option>
+	<option value="65" title="Membre suppléant(e) du Bureau de l&#39;Assemblée nationale">Membre suppl&#233;ant(e) du Bureau de l&#39;Assembl&#233;e nationale</option>
+	<option value="3" title="Ministre">Ministre</option>
+	<option value="89" title="Ministre responsable d&#39;une région">Ministre responsable d&#39;une r&#233;gion</option>
+	<option value="67" title="Porte-parole">Porte-parole</option>
+	<option value="1" title="Premier(ère) ministre">Premier(&#232;re) ministre</option>
+	<option value="11" title="Premier(ère) vice-président(e) de l&#39;Assemblée nationale">Premier(&#232;re) vice-pr&#233;sident(e) de l&#39;Assembl&#233;e nationale</option>
+	<option value="53" title="Président(e) d&#39;une commission">Pr&#233;sident(e) d&#39;une commission</option>
+	<option value="9" title="Président(e) de l&#39;Assemblée nationale">Pr&#233;sident(e) de l&#39;Assembl&#233;e nationale</option>
+	<option value="57" title="Président(e) de séance">Pr&#233;sident(e) de s&#233;ance</option>
+	<option value="61" title="Président(e) du Bureau de l&#39;Assemblée nationale">Pr&#233;sident(e) du Bureau de l&#39;Assembl&#233;e nationale</option>
+	<option value="47" title="Président(e) du caucus de l&#39;opposition officielle">Pr&#233;sident(e) du caucus de l&#39;opposition officielle</option>
+	<option value="45" title="Président(e) du caucus du gouvernement">Pr&#233;sident(e) du caucus du gouvernement</option>
+	<option value="1067" title="Président(e) du caucus du troisième groupe d&#39;opposition">Pr&#233;sident(e) du caucus du troisi&#232;me groupe d&#39;opposition</option>
+	<option value="121" title="Président(e) du Conseil du trésor">Pr&#233;sident(e) du Conseil du tr&#233;sor</option>
+	<option value="15" title="Troisième vice-président(e) de l&#39;Assemblée nationale">Troisi&#232;me vice-pr&#233;sident(e) de l&#39;Assembl&#233;e nationale</option>
+	<option value="107" title="Vice-premier(ère) ministre">Vice-premier(&#232;re) ministre</option>
+	<option value="55" title="Vice-président(e) d&#39;une commission">Vice-pr&#233;sident(e) d&#39;une commission</option>
+	<option value="41" title="Whip adjoint(e) de l&#39;opposition officielle">Whip adjoint(e) de l&#39;opposition officielle</option>
+	<option value="39" title="Whip adjoint(e) du gouvernement">Whip adjoint(e) du gouvernement</option>
+	<option value="37" title="Whip du deuxième groupe d&#39;opposition">Whip du deuxi&#232;me groupe d&#39;opposition</option>
+	<option value="1069" title="Whip du troisième groupe d&#39;opposition">Whip du troisi&#232;me groupe d&#39;opposition</option>
+	<option value="31" title="Whip en chef de l&#39;opposition officielle">Whip en chef de l&#39;opposition officielle</option>
+	<option value="29" title="Whip en chef du gouvernement">Whip en chef du gouvernement</option>
+
+</select>
+                </div>
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixCommission" >Commission parlementaire</label>
+                <div class="my-skinnable-select" data-champ="CommissionParlementaire">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixCommission" id="ctl00_ColGauche_RechercheDeputes_ddlChoixCommission">
+	<option selected="selected" value="-1">Toutes les commissions</option>
+	<option value="7" title="Administration publique">Administration publique</option>
+	<option value="37" title="Agriculture, pêcheries, énergie et ressources naturelles">Agriculture, p&#234;cheries, &#233;nergie et ressources naturelles</option>
+	<option value="13" title="Aménagement du territoire">Am&#233;nagement du territoire</option>
+	<option value="5" title="Assemblée nationale">Assembl&#233;e nationale</option>
+	<option value="39" title="Culture et éducation">Culture et &#233;ducation</option>
+	<option value="21" title="Économie et travail">&#201;conomie et travail</option>
+	<option value="23" title="Finances publiques">Finances publiques</option>
+	<option value="25" title="Institutions">Institutions</option>
+	<option value="41" title="Relations avec les citoyens">Relations avec les citoyens</option>
+	<option value="43" title="Santé et services sociaux">Sant&#233; et services sociaux</option>
+	<option value="55" title="Sous-commission de la réforme parlementaire">Sous-commission de la r&#233;forme parlementaire</option>
+	<option value="35" title="Transports et environnement">Transports et environnement</option>
+
+</select>
+                </div>
+                <label for="ctl00_ColGauche_RechercheDeputes_ddlChoixRegionAdministrative" >Région administrative</label>
+                <div class="my-skinnable-select" data-champ="RegionAdministrative">
+                    <select name="ctl00$ColGauche$RechercheDeputes$ddlChoixRegionAdministrative" id="ctl00_ColGauche_RechercheDeputes_ddlChoixRegionAdministrative">
+	<option selected="selected" value="-1">Toutes les r&#233;gions</option>
+	<option value="203|1|3" title="Abitibi-Témiscamingue">Abitibi-T&#233;miscamingue</option>
+	<option value="279|191|277|275" title="Bas-Saint-Laurent">Bas-Saint-Laurent</option>
+	<option value="273|113|49|161|227|93|43|97|271|133|181" title="Capitale-Nationale">Capitale-Nationale</option>
+	<option value="11|265|259|99" title="Centre-du-Québec">Centre-du-Qu&#233;bec</option>
+	<option value="275|19|55|129|13|15|253|261" title="Chaudière-Appalaches">Chaudi&#232;re-Appalaches</option>
+	<option value="185|67" title="Côte-Nord">C&#244;te-Nord</option>
+	<option value="253|205|221|171|189|15|35|255" title="Estrie">Estrie</option>
+	<option value="89|73|27" title="Gaspésie - Îles-de-la-Madeleine">Gasp&#233;sie - &#206;les-de-la-Madeleine</option>
+	<option value="21|121|281|101|23|201|145|229|287" title="Lanaudière">Lanaudi&#232;re</option>
+	<option value="61|157|79|25|287|9|269|293|23|107" title="Laurentides">Laurentides</option>
+	<option value="155|125|247|283|69|53" title="Laval">Laval</option>
+	<option value="39|285|231|143" title="Mauricie">Mauricie</option>
+	<option value="87|85|17|223|239|47|263|119|211|37|115|117|139|225|235|257|29|241|187|209|99" title="Montérégie">Mont&#233;r&#233;gie</option>
+	<option value="177|111|267|31|289|33|199|95|245|81|77|123|153|215|5|291|249|207|243|59|169|213|141|135|195|165|91" title="Montréal">Montr&#233;al</option>
+	<option value="233" title="Nord-du-Québec">Nord-du-Qu&#233;bec</option>
+	<option value="175|75|41|83|179" title="Outaouais">Outaouais</option>
+	<option value="197|109|65|51|103" title="Saguenay - Lac-Saint-Jean">Saguenay - Lac-Saint-Jean</option>
+
+</select>
+                </div>
+            
+		        <div align="right" class="btnRechercheContextuelle">
+                    
+			        <input onclick="RechercheDepute()" type="button" value="Rechercher" class="btnSoumettre"/>
+		        </div>
+            </fieldset>
+    </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        InitialiserRechercheDeputes();
+        GererChangementEtatDepute.call($("[data-champ='EtatDepute'] select"));
+        $("input.champMotCle, [data-champ] input, [data-champ] select]").keypress(function (e) {
+            if (e && e.keyCode == 13) {
+                RechercheDepute();
+                return false;
+            }
+        });
+    });
+
+    function RechercheDepute() {
+        var queryString = "SectionRecherche=3";
+
+        var motsCles = $('#ctl00_ColGauche_RechercheDeputes_txtMotsCles');
+        if (motsCles.val() != "")
+            queryString = queryString + "&MotsCles=" + encodeURIComponent(htmlEscape(motsCles.val()));
+
+        var etatDepute = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixEtatDepute');
+        queryString = queryString + "&EtatDepute=" + etatDepute.val();
+
+        var circonscription = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixCirconscription');
+        queryString = queryString + "&Circonscription=" + circonscription.val();
+
+        var typeFonction = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixTypeFonction');
+        queryString = queryString + "&FonctionParlementaire=" + typeFonction.val();
+
+        var commission = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixCommission');
+        queryString = queryString + "&CommissionParlementaire=" + commission.val();
+
+        var regAdm = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixRegionAdministrative');
+        queryString = queryString + "&RegionAdministrative=" + regAdm.val();
+
+        var partiPolitique = $('#ctl00_ColGauche_RechercheDeputes_ddlChoixPartiPolitique');
+        queryString = queryString + "&AllegeancePolitique=" + partiPolitique.val();
+        
+        //Appel de la page de recherche.
+        window.location = '/fr/recherche/recherche-avancee.html?' + queryString;
+    }
+    
+</script>
+
+
+
+        </div>
+
+        <div class="ColCentre colonne Contenu">
+
+            <!-- PlaceHolder: permet d'afficher une accroche (defaut: vide) -->
+            
+    <div id="ctl00_Accroche_pnlMomentDissolution" style="position: relative;">
+	
+        <div style="position: absolute; top: -42px;">
+            	
+        </div>
+    
+</div>
+
+
+            <!-- PlaceHolder: conteneur pour tout le contenu excepte la navigation -->
+            
+	            				
+					<!-- PlaceHolder: permet de masquer les utilitaires d'Assemblee (defaut: s'affiche) -->
+					
+						
+
+<div class="utilitairesAssemblee" id="utilitairesAssemblee">
+    <div id="ColIconesUtilitairesAssemblee">
+        <div id="ColOutilsUtilitairesAssemblee">
+            <ul class="utilitairesAssemblee listeSansPuces">
+                <li>
+                    <a href="javascript:ImprimerBase()">
+			            <img alt="Imprimer la page" title="Imprimer la page"
+                        src='/Images/icones/partageImprimante.gif' width="16" height="16"/></a>
+                </li>
+                <li class="styleswitch">
+                    <a href="#Reguliere" rel="Reguliere" class="styleswitch Reguliere">
+                        <img alt="Taille du texte : régulière" title="Taille du texte : régulière" src='/Images/icones/retrecir.gif' width="16" height="16"/></a>
+                    <a href="#Grande" rel="Grande" title="Taille du texte : très grande" class="styleswitch Grande">
+                        <img alt="Taille du texte : très grande" title="Taille du texte : très grande" src='/Images/icones/agrandir.gif' width="16" height="16"/></a>
+                </li>
+                <li>
+                    <a href='/fr/fils-rss.html' class="nePasRediriger">
+                        <img alt="Fils RSS" title="Fils RSS"
+                        src='/Images/icones/partageRss.gif' width="16" height="16"/></a>
+                </li>
+            </ul>
+        </div>
+  
+            
+        <div id="ColPartageUtilitairesAssemblee">
+            <div class="boutonPartager">
+                <a href="#">Partager</a>
+            </div>
+            <ul class="utilitairesAssemblee listeSansPuces" style="z-index:999;">
+                <div class="fleche"></div>
+                    <li>
+                        <a target="_blank" href='https://www.facebook.com/sharer/sharer.php?u=http://www.assnat.qc.ca%2ffr%2fdeputes%2fbonnardel-francois-11%2findex.html' class="nePasRediriger">
+                            <img alt="Partager par Facebook" title="Partager par Facebook"
+                            src='/Images/icones/partageFacebook.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='https://x.com/intent/tweet?url=http://www.assnat.qc.ca%2ffr%2fdeputes%2fbonnardel-francois-11%2findex.html' class="nePasRediriger">
+                            <img alt="Partager par X" title="Partager par X"
+                            src='/Images/icones/partageTwitter.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='https://www.linkedin.com/sharing/share-offsite/?url=http://www.assnat.qc.ca%2ffr%2fdeputes%2fbonnardel-francois-11%2findex.html' class="nePasRediriger">
+                            <img alt="Partager par LinkedIn" title="Partager par LinkedIn"
+                            src='/Images/icones/partageLinkedin.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='/fr/envoyer-ami.html?lienurl=%2ffr%2fdeputes%2fbonnardel-francois-11%2findex.html' class="nePasRediriger">
+                            <img alt="Partager par courriel" title="Partager par courriel"
+                            src='/Images/icones/partageCourriel.gif' /></a>
+                    </li>
+            </ul>
+        </div>
+        
+    </div>
+    <div id="ColLiensUtilitairesAssemblee">
+        <ul class="listeIconesHorizontale listeIconesHorizontaleUtilitaires listeSansPuces">
+            <!-- Icone "Diagramme de l'Assemblée" -->
+		    
+			    <li class="icoDiagramme">
+                    <a href="/fr/document/19787.html">Diagramme de l'Assemblée</a>
+                </li>
+		    
+
+            <li id="IndicateurEnDirectPage">
+                <span id="spnEnDirect" class="styleHyperlien">
+		            <span id="IconeEnDirect" class="icoEnDirect"> </span>		
+		            En direct sur le Web
+	            </span>
+            </li>
+            <!-- Section "Vidéo et audio" -->
+            
+        </ul>
+    </div>
+</div>        
+					
+
+                    <!-- Ancre pour le "skiplink atteindreContenu" -->
+                    <div id="divAncreContenuPrincipal" class="skipLinks">
+                        <a name="ancreContenuPrincipal" id="ancreContenuPrincipal"></a>
+                    </div>
+
+                    <!-- Note sur les titres H1: dans ce gabarit, il y a 2 emplacements possibles pour le H1. Le cas
+						 le plus usuel est généré par défaut. Si necessaire, overrider dans la page ASPX -->
+			
+					<!-- PlaceHolder: permet d'afficher le titre sur les 2 colonnes. Cas plus rare. (default: vide) -->
+					
+
+					<!-- PlaceHolder: permet d'afficher le texte en dessus des colonnes -->
+					
+					
+					<div class="conteneurColonnesImbriquees">		
+                        <div class="colonneImbriquee imbGauche">
+
+							<!-- PlaceHolder: permet d'afficher le titre sur 1 colonne. Cas usuel. (default: s'affiche) -->
+							
+
+							<!-- PlaceHolder: contenu principal de la page (defaut: vide) -->
+							
+    <script type="text/javascript">
+        var nombreResultatsTotal = 1;
+    </script>
+    <input type="hidden" id="listeDocumentTravaux" value="-" />
+    
+            <img alt="François Bonnardel" title="François Bonnardel" src="https://www.assnat.qc.ca/Media/Process.aspx?asset=ANQ.Vigie.Bll.Image_289&amp;process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz" class="photoDepute" />
+        
+    
+    <div class="enteteFicheDepute">
+        
+                <script type="text/javascript">
+                    var nomDepute = "Bonnardel";
+                </script>
+                <h1>François&nbsp;<span class="nomDepute">Bonnardel</span></h1>
+            
+
+        <ul>
+
+        
+                <li>Député de Granby</li>
+            
+
+        
+                <li>Coalition avenir Québec</li>
+            
+
+        
+                <li>Ministre de l’Immigration, de la Francisation et de l’Intégration</li>
+            
+                <li>Leader parlementaire du gouvernement</li>
+            
+
+        </ul>
+
+        
+
+    </div>
+    <div class="clear">&nbsp;</div>
+    
+            <ul><li><a href='/fr/video-audio/archives-parlementaires/deputes/AudioVideo-53797.html'>Vidéo de présentation</a></li></ul>
+        
+
+    <div id="ctl00_ColCentre_ContenuColonneGauche_onglets" class="tabulationFicheDepute">
+	
+        <ul class="ui-tabs-nav">
+            <li class="premier ui-tabs-selected">
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/index.html" id="ctl00_ColCentre_ContenuColonneGauche_index" class="actif">Fonctions</a>
+            </li>
+            <li>
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/biographie.html" id="ctl00_ColCentre_ContenuColonneGauche_biographie" class="ancreNommee">Biographie</a>
+            </li>
+            <li>
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/interventions.html" id="ctl00_ColCentre_ContenuColonneGauche_interventions" class="ancreNommee">Interventions</a>
+            </li>
+            <li>
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/conferencesDePresse.html" id="ctl00_ColCentre_ContenuColonneGauche_conferencesDePresse" class="ancreNommee">Activités de presse</a>
+            </li>
+            <li>
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/projetsDeLoi.html" id="ctl00_ColCentre_ContenuColonneGauche_projetsDeLoi" class="ancreNommee">Projets de loi</a>
+            </li>
+            
+                    <li> 
+                        <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/depenses.html" id="ctl00_ColCentre_ContenuColonneGauche_depenses" class="ancreNommee">Dépenses</a>
+                    </li>    
+            
+            <li>
+                <a href="https://www.assnat.qc.ca/fr/deputes/bonnardel-francois-11/coordonnees.html" id="ctl00_ColCentre_ContenuColonneGauche_coordonnees" class="ancreNommee">Coordonnées</a>
+            </li>
+        </ul>
+    
+</div>        
+    
+    <a id="bouton-gauche" href="#"><img id="fleche-navigation-gauche" src='/Images/flecheGactive.gif'/></a>
+    <a id="bouton-droite" href="#"><img id="fleche-navigation-droite" src='/Images/flecheDactive.gif' /></a>
+    
+    <div class="clear">
+    </div>
+
+    
+
+<h2>Fonctions politiques, parlementaires et ministérielles</h2>
+
+
+
+
+
+    <h3>Réélu député de la circonscription de Granby aux élections générales du 3 octobre 2022</h3>
+    <ul>
+        <h4>Fonctions actuelles</h4>
+                    
+                <li>Membre du Comité de législation depuis le 29 avril 2026 </li>
+                        
+                <li>Leader parlementaire du gouvernement depuis le 21 avril 2026 </li>
+                        
+                <li>Ministre de l’Immigration, de la Francisation et de l’Intégration depuis le 21 avril 2026 </li>
+                        
+                <li>Membre du Comité ministériel des services aux citoyens depuis le 21 avril 2026 </li>
+                        
+                <li>Membre de la Commission de l’Assemblée nationale depuis le 21 avril 2026 </li>
+                        
+                <li>Membre de la Sous-commission de la réforme parlementaire depuis le 21 avril 2026 </li>
+            
+
+        <h4>Fonctions précédentes</h4>        
+        
+                <li>Vice-président de la Commission de l’agriculture, des pêcheries, de l’énergie et des ressources naturelles du 22 septembre 2025 au 21 avril 2026</li>
+            
+                <li>Leader parlementaire adjoint du gouvernement du 18 mars 2025 au 10 septembre 2025</li>
+            
+                <li>Membre de la Commission de l’Assemblée nationale du 18 mars 2025 au 10 septembre 2025</li>
+            
+                <li>Membre de la Sous-commission de la réforme parlementaire du 18 mars 2025 au 10 septembre 2025</li>
+            
+                <li>Vice-président du Comité ministériel des services aux citoyens du 11 septembre 2024 au 10 septembre 2025</li>
+            
+                <li>Ministre de la Sécurité publique du 20 octobre 2022 au 10 septembre 2025</li>
+            
+                <li>Ministre responsable de la région de l’Estrie du 20 octobre 2022 au 10 septembre 2025</li>
+            
+                <li>Membre du Comité ministériel des services aux citoyens du 20 octobre 2022 au 11 septembre 2024</li>
+            
+    </ul>
+    
+
+
+    <h3>Réélu député de la circonscription de Granby aux élections générales du 1 octobre 2018</h3>
+    <ul>
+        
+                <li>Vice-président du Comité ministériel des services aux citoyens du 31 octobre 2018 au 20 octobre 2022</li>
+            
+                <li>Ministre des Transports du 18 octobre 2018 au 20 octobre 2022</li>
+            
+                <li>Ministre responsable de la région de l’Estrie du 18 octobre 2018 au 20 octobre 2022</li>
+            
+    </ul>
+    
+    <h3>Réélu député de la circonscription de Granby aux élections générales du 7 avril 2014</h3>
+    <ul>
+        
+                <li>Porte-parole du deuxième groupe d’opposition en matière d’économie collaborative du 26 octobre 2017 au 23 août 2018</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière d’économie de partage du 24 janvier 2017 au 26 octobre 2017</li>
+            
+                <li>Membre de la Commission des finances publiques du 10 février 2015 au 23 août 2018</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de finances du 19 décembre 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec les États-Unis (DANREU) du 20 juin 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec la Bavière (DANRBA) du 20 juin 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec la Catalogne (DANRC) du 20 juin 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec les institutions européennes (DANRIE) du 20 juin 2014 au 23 août 2018</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de transports et de stratégie maritime du 25 avril 2014 au 19 décembre 2014</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition responsable de la région de l’Estrie du 25 avril 2014 au 23 août 2018</li>
+            
+                <li>Leader parlementaire du deuxième groupe d’opposition du 14 avril 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Commission de l’Assemblée nationale du 14 avril 2014 au 23 août 2018</li>
+            
+                <li>Membre de la Sous-commission de la réforme parlementaire du 14 avril 2014 au 23 août 2018</li>
+            
+    </ul>
+    
+    <h3>Réélu député de la circonscription de Granby aux élections générales du 4 septembre 2012</h3>
+    <ul>
+        
+                <li>Membre suppléant du Bureau de l’Assemblée nationale du 30 mai 2013 au 5 mars 2014</li>
+            
+                <li>Whip du deuxième groupe d’opposition du 22 mai 2013 au 5 mars 2014</li>
+            
+                <li>Membre de la Commission de l’Assemblée nationale du 22 mai 2013 au 5 mars 2014</li>
+            
+                <li>Membre de la Sous-commission de la réforme parlementaire du 22 mai 2013 au 5 mars 2014</li>
+            
+                <li>Vice-président de la Commission de l’administration publique du 7 novembre 2012 au 28 mai 2013</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de ressources naturelles du 21 septembre 2012 au 5 mars 2014</li>
+            
+    </ul>
+    
+    <h3>Réélu député de la circonscription de Shefford aux élections générales du 8 décembre 2008</h3>
+    <ul>
+        
+                <li>Porte-parole du deuxième groupe d’opposition en matière de finances publiques du 11 février 2010 au 14 février 2012</li>
+            
+                <li>Vice-président de la Commission de l’administration publique du 1 décembre 2009 au 14 février 2012</li>
+            
+                <li>Membre de la Commission de l’administration publique du 24 novembre 2009 au 1 décembre 2009</li>
+            
+                <li>Chef du deuxième groupe d’opposition du 29 octobre 2009 au 19 novembre 2009</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de finances du 28 octobre 2009 au 11 février 2010</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de Conseil du trésor du 28 octobre 2009 au 11 février 2010</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de relations internationales du 28 octobre 2009 au 19 novembre 2009</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de Francophonie du 28 octobre 2009 au 19 novembre 2009</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de réforme des institutions démocratiques du 28 octobre 2009 au 11 février 2010</li>
+            
+                <li>Membre de la Commission de l’économie et du travail du 15 septembre 2009 au 3 novembre 2009</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec l’Assemblée nationale française (DANRANF) du 27 mai 2009 au 1 août 2012</li>
+            
+                <li>Membre de la Délégation de l’Assemblée nationale pour les relations avec le Sénat français (DANRSF) du 27 mai 2009 au 1 août 2012</li>
+            
+                <li>Vice-président de la Commission de l’administration publique du 23 avril 2009 au 29 octobre 2009</li>
+            
+                <li>Porte-parole du deuxième groupe d’opposition en matière de développement économique et de finances publiques du 21 avril 2009 au 28 octobre 2009</li>
+            
+                <li>Membre suppléant du Bureau de l’Assemblée nationale du 14 janvier 2009 au 25 novembre 2009</li>
+            
+                <li>Membre de la Commission des finances publiques du 14 janvier 2009 au 14 février 2012</li>
+            
+    </ul>
+    
+    <h3>Élu député de la circonscription de Shefford aux élections générales du 26 mars 2007</h3>
+    <ul>
+        
+                <li>Membre de la Commission de l’économie et du travail du 22 mai 2008 au 5 novembre 2008</li>
+            
+                <li>Porte-parole de l’opposition officielle en matière de travail du 15 mai 2008 au 5 novembre 2008</li>
+            
+                <li>Porte-parole de l’opposition officielle en matière de famille du 29 août 2007 au 15 mai 2008</li>
+            
+                <li>Membre de la Commission de la culture du 23 mai 2007 au 22 mai 2008</li>
+            
+                <li>Membre suppléant du Bureau de l’Assemblée nationale du 15 mai 2007 au 5 novembre 2008</li>
+            
+                <li>Porte-parole de l’opposition officielle en matière d’habitation du 19 avril 2007 au 29 août 2007</li>
+            
+                <li>Whip en chef de l’opposition officielle du 4 avril 2007 au 5 novembre 2008</li>
+            
+                <li>Membre de la Commission de l’Assemblée nationale du 4 avril 2007 au 5 novembre 2008</li>
+            
+    </ul>
+    
+
+    
+    
+    
+    
+    
+    
+
+
+							
+						</div>
+						
+						<div class="colonneImbriquee imbDroite">
+						
+							<!-- PlaceHolder: contenu secondaire de la page (defaut: vide) -->
+							
+						</div>
+
+					</div>
+
+					<!-- PlaceHolder: permet d'afficher du texte en dessous des colonnes -->
+					
+
+					<!-- PlaceHolder: contenu en complement de la page -->
+					
+						
+				
+					
+
+				
+        </div>
+
+        <!-- N'est plus utilisee a cause des utilitaire d'assemblee qui doivent spanner col centre + col droite -->
+        <div class="ColDroite colonne"></div>
+
+        <div class="clear" id="ClearPiedPage"></div>
+
+        <!-- Bandeau lorsque la langue est différente que français -->
+        
+
+        <!-- PiedDePage: affiche le contenu du pied de page -->
+        
+
+<div id="PiedDePage" class="PiedDePage">
+    <div id="bInfolettre" style="margin-bottom: 25px;"><a class="btnInfolettre" href="https://l.communications.assnat.qc.ca/T/WF/24042/op0ace/Optin/fr-CA/Form.ofsys" target="_blank">Abonnez-vous à notre infolettre!</a></div>
+    <ul>
+        <li class="Premier">
+            <a href="/fr/fils-rss.html" class="sanssouligne icoFilsRss">
+                <span class="styleHyperlien">Fils RSS</span>
+            </a>
+        </li>
+        
+        <li><a href="/fr/liens-interet.html">Liens d'intérêt</a></li>
+        <li><a href="/fr/aide/index.html">Aide</a></li>
+        <li><a href="/fr/plan-site.html">Plan du site</a></li>
+        
+        <li><a href="/fr/propos-site/accessibilite.html">Accessibilité</a></li>
+        <li><a href="/fr/abc-assemblee/acces-information/index.html">Accès à l'information</a></li>
+    </ul>
+    <br />
+    <ul>
+        
+        <li class="Premier"><a href="/fr/propos-site/index.html">À propos du site</a> </li>
+        <li><a href="/fr/propos-site/droits-propriete-intellectuelle.html">Conditions d'utilisation</a></li>
+        <li><a href="/fr/propos-site/politique-confidentialite.html">Politique de confidentialité</a></li>
+        <li><a href="https://m.assnat.qc.ca">Mobile</a></li>
+    
+        
+            <li><a href="/en/deputes/bonnardel-francois-11/index.html">English</a></li>
+        
+
+    </ul>
+
+    <br />
+    <span class="NonVisible">
+        
+                <ul>
+            
+                <li class="Premier">Date de la dernière modification : 3 octobre 2022 </li>
+            
+                </ul>
+            
+    </span>
+</div>
+
+
+<script type="text/javascript">
+
+    //Forcer l'affichage du popup Didomi dans la langue de la page affichée au lieu du langage du fureteur de l'utilisateur
+    var langage = $('html').attr('lang');
+    var boutonInfolettre = document.getElementById('bInfolettre');
+
+    $(document).ready(function(){
+        if (langage == 'fr') {
+            window.didomiConfig = {
+                languages: {
+                    enabled: ['fr'],
+                    default: 'fr'
+                }
+            };
+            boutonInfolettre.style.display = 'block';
+        } else {
+            window.didomiConfig = {
+                languages: {
+                    enabled: ['en'],
+                    default: 'en'
+                }
+            };
+            boutonInfolettre.style.display = 'none';
+        }
+    })
+    
+</script>
+
+    </div>
+</form>
+
+
+	            				
+    
+</body>
+</html>

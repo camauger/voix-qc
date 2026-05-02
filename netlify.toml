@@ -1,0 +1,25 @@
+# Déploiement du frontend statique (HTML/CSS/JS vanilla, sans build npm).
+# La base Neon et les jobs de scrape/API Flask ne tournent pas sur Netlify :
+# voir AGENTS.md pour l’architecture cible.
+
+[build]
+  publish = "frontend"
+  # Pas de bundler : commande no-op ou script qui copie des JSON générés en CI.
+  command = "echo \"Build statique — pas d'étape npm\""
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+
+# À actuer une fois l’API hébergée (Render, Fly, VPS, etc.) :
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://api.example.com/api/:splat"
+#   status = 200
+#   force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

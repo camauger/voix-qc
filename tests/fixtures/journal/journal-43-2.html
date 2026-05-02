@@ -1,0 +1,1511 @@
+
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+
+    <!-- Enonces d'inclusion de fichiers JS et CSS -->
+    
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta http-equiv="content-language" content="fr" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<link type="text/css" href="/styles/ResetCSS.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/AssNat.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/Reguliere.css" title="Reguliere"  rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/Moyenne.css" title="Moyenne" rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/Grande.css" title="Grande" rel="alternate stylesheet" media="screen" />
+<link type="text/css" href="/styles/infoBulle.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jScrollPane.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jquery.treeview.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/styles/jquery.skinned-select.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/jquery.datePicker.min.css" rel="stylesheet" media="screen"  />
+<link type="text/css" href="/styles/Calendrier.min.css" rel="stylesheet" media="screen"  />
+<link href="/Images/favicon.ico" rel="shortcut icon" />
+
+<!-- Didomi -->
+<script type="text/javascript">window.gdprAppliesGlobally = false; (function () { (function (e, r) { var t = document.createElement("link"); t.rel = "preconnect"; t.as = "script"; var n = document.createElement("link"); n.rel = "dns-prefetch"; n.as = "script"; var i = document.createElement("link"); i.rel = "preload"; i.as = "script"; var o = document.createElement("script"); o.id = "spcloader"; o.type = "text/javascript"; o["async"] = true; o.charset = "utf-8"; var a = "https://sdk.privacy-center.org/" + e + "/loader.js?target_type=notice&target=" + r; if (window.didomiConfig && window.didomiConfig.user) { var c = window.didomiConfig.user; var s = c.country; var d = c.region; if (s) { a = a + "&country=" + s; if (d) { a = a + "&region=" + d } } } t.href = "https://sdk.privacy-center.org/"; n.href = "https://sdk.privacy-center.org/"; i.href = a; o.src = a; var p = document.getElementsByTagName("script")[0]; p.parentNode.insertBefore(t, p); p.parentNode.insertBefore(n, p); p.parentNode.insertBefore(i, p); p.parentNode.insertBefore(o, p) })("196da249-e5c8-4975-84d3-4b76bf16efd6", "UgnH3adf") })();</script>
+
+
+<!-- Feuilles de styles specifiques IE -->
+
+<!--[if lte IE 6]>
+    <link type="text/css" href="/styles/CorrectionsIE6.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+
+<!--[if IE 7]>
+    <link type="text/css" href="/styles/CorrectionsIE7.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+
+<!--[if IE 8]>
+    <link type="text/css" href="/styles/CorrectionsIE8.min.css" rel="stylesheet" media="screen"  />
+<![endif]-->
+<link type="text/css" href="/styles/Impression.min.css" rel="stylesheet" media="print"  />
+
+<link type="text/css" href="/styles/Tableau.min.css" rel="stylesheet" media="screen"  />
+
+<script type="text/javascript" src="/scripts/jquery.js?version=1.2.6"></script>
+
+<script type="text/javascript" src="/scripts/jquery-ui.js?version=1.5.2"></script>
+
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-5X47H2N');</script> 
+<!-- End Google Tag Manager -->
+
+
+<script type="text/javascript"  >
+//<![CDATA[
+// Libellé du calendrier
+$.dpText = {
+	TEXT_PREV_YEAR		:	'Année précédente',
+	TEXT_PREV_MONTH		:	'Mois précédent',
+	TEXT_NEXT_YEAR		:	'Année suivante',
+	TEXT_NEXT_MONTH		:	'Mois suivant',
+	TEXT_CLOSE			:	'[x] Fermer',
+	TEXT_CHOOSE_DATE	:	'Choisir une date'
+}
+
+var _contenuLoading = '<img style="width: 16px;height: 16px;" src="/Images/lightbox/loading.gif" />&nbsp; Chargement en cours...';
+
+var _nbAnneeArchiveActivite = '3';
+// Voir Calendrier.js pour _dtSetStartDate
+var _dtSetEndDate = '2026-06-27';
+var intNombreAnneeArchiveActivite = 3;
+var langueCourante = 'fr';
+
+_initCalendrierTypeActiviteJSON = eval([{"NomTypeActivite":"Autres activités","Categorie":"D","Name":null,"Description":null},{"NomTypeActivite":"Conférences et points de presse","Categorie":"C","Name":null,"Description":null},{"NomTypeActivite":"Séances de l'Assemblée","Categorie":"A","Name":null,"Description":null},{"NomTypeActivite":"Séances des commissions","Categorie":"B","Name":null,"Description":null}]);name 
+_urlGetCalendrierDataJSON = '/WebMethod/Calendrier.aspx/GetCalendrier?langue=fr';
+_documentURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=Thumbnail&token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&MediaId=";
+_imageThumbnailURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=AlbumThumbnail&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_imageOriginaleURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_imageThumbnailDrapeauURL = "https://www.assnat.qc.ca/Media/Process.aspx?process=ThumbnailDrapeau&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=";
+_lienContenuURL = "/fr/deputes/index";
+_extensionPagesDuSite = "html";
+_lienPatronUrlCommuniquePresse = '/fr/actualites-salle-presse/communiques/';
+_lienPatronUrlTranscription = '/fr/actualites-salle-presse/conferences-points-presse/';
+_lienPatronUrlEnDirect = '/fr/video-audio/index';
+_lienJournalDebat ='/fr/travaux-parlementaires/{0}.html';
+_lienJournalDebatCom ='/fr/travaux-parlementaires/commissions/{0}/journal-debats/index';
+_lienJournalDebatChmbr ='/fr/travaux-parlementaires/{0}';
+_listeObjetMetierPatronUrl = "DocumentGenerique:/fr/document/{0}.html|Commission:/fr/travaux-parlementaires/commissions/{0}/index.html|Mandat:/fr/travaux-parlementaires/mandats/{0}/index.html|Lien:/fr/lien/{0}.html|CommuniquePresse:/fr/actualites-salle-presse/communiques/{0}.html|Actualite:/fr/actualites-salle-presse/nouvelle/{0}.html|ConferencePointPresse:/fr/actualites-salle-presse/conferences-points-presse/{0}.html|Consultation:/fr/travaux-parlementaires/consultations/{0}.html|SeanceAssemblee:/fr/travaux-parlementaires/assemblee-nationale/{0}/index.html|ProjetLoi:/fr/travaux-parlementaires/projets-loi/projet-loi-{0}.html|VideoAudio:/fr/video-audio/{0}.html|Journal:/fr/travaux-parlementaires/{0}.html|SyndicationRSS:/fr/rss/{0}.html|Petition:/fr/exprimez-votre-opinion/petition/{0}/index.html|TermeEncyclopedique:/fr/patrimoine/lexique/{0}.html|SectionDelegation:/fr/diplomatie/{0}/{1}/index.html|Vote:/fr/travaux-parlementaires/registre-des-votes/{0}/index.html|Depute:/fr/deputes/{0}/index.html|Texte:/fr/{0}.html|Individu:/fr/patrimoine/anciens-parlementaires/{0}.html|";
+_lienAideSoutienTechnique = '/fr/aide/aide-recherche.html#javascript';
+
+var _urlGetCalendrierObtenirActiviteEnOndes = '/WebMethod/Calendrier.aspx/ObtenirActiviteEnOndes';
+var intervalleRafraichissementWebDiffusion = '60';
+var urlPageVideoAudio = '/fr/video-audio/index.html?activite={0}';
+var libelleDateDebutDu = 'Du';
+var libelleDateDebutVers = 'Vers';
+var libelleDateFinJusqua = 'jusqu\'à';
+var libelleDateFinAu = 'au';
+var libelleHeureFinA = 'à'
+var libelleDebutApresPeriodeCourante = 'début : après la période des affaires courantes de l\'Assemblée';
+var bulleAidePeriodeAffaireCourante = '<span class="btnInfoBulle sansControle"><a href="javascript:void(0)" class="sanssouligne"><img src="http://www.assnat.qc.ca/Images/btnInfoBulle.gif" title="Afficher l\'aide" alt="Afficher l\'aide"></a><span title="Début : après la période des affaires courantes de l\'Assemblée"></span></span>';
+var bulleAideApresAvisTravauxCommissions = '<span class="btnInfoBulle sansControle"><a href="javascript:void(0)" class="sanssouligne"> <img src="http://www.assnat.qc.ca/Images/btnInfoBulle.gif" title="Afficher l\'aide" alt="Afficher l\'aide"></a><span title="Début : après les avis touchant les travaux des commissions"></span></span>'
+var libelleActiviteReporteeDateUlterieure = 'Activité reportée à une date ultérieure';
+
+var libelleCalAPartirDe = 'À partir de';
+var libelleCalEnCours = 'En cours';
+var libelleCalDebut = 'Début';
+
+var libelleDuree = 'Durée :';
+
+    var libelleAucunVideo = "La recherche n’a donné aucun résultat.";
+    var libelleAucuneAutreActiviteEnDirect = "Aucune autre activité en direct."
+
+var libelleNombreResultat = 'Nombre de résultats&nbsp;';
+var libelleMotsCles = 'Mots clés';
+var libelleCategorie = 'Catégorie';
+var libelleSession = 'Session';
+var libelleDateOuPeriode = 'Date ou période&nbsp;: ';
+var libelleAPartirDu = 'À partir du';
+var libelleJusquAu = "Jusqu'au";
+
+
+
+var arrCalendrierLblGeneral = {
+                                "lblCalOuvrir": "Ouvrir",
+                                "lblCalFermerEntete": "Fermer"       
+                            };
+var arrCalLblJoursSemaine = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+var arrCalLblMoisAnnee = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+var arrCalLblMoisAnneeAbr = ['JA', 'FE', 'MR', 'AR', 'MA', 'JN', 'JL', 'AU', 'SE', 'OC', 'NO', 'DE'];
+var lblCalAucuneActivite = "Aucune activité au calendrier aujourd'hui.";
+var lblCalAucuneActiviteType = "Aucune activité de cette catégorie n'est prévue aujourd'hui."
+var lblCalDifficulteTechnique = "Le calendrier n'est pas accessible en ce moment. Veuillez réessayer dans quelques minutes.";
+var lblCalActPrivee = "Activité privée"; 
+var lblCalActSurInvitation = "Sur invitation";
+var lblCalActAnnulee = "Activité annulée"; 
+var lblCalEnDirect = "En direct";
+var lblCalTranscription = "Transcription";
+var lblCalCommunique = "Communiqué";
+var lblCalToutesActivites = "Toutes les activités";
+var lblCalVideo = "Vidéo";
+var lblCalAudio = "Audio";
+
+// Libellés du date picker
+
+    Date.dayNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    Date.abbrDayNames = ['DIM', 'LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM'];
+    Date.monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    Date.abbrMonthNames = ['JA', 'FE', 'MR', 'AR', 'MA', 'JN', 'JL', 'AU', 'SE', 'OC', 'NO', 'DE'];
+	Date.firstDayOfWeek = 7;
+
+
+// Libellés pour treeview - overrider dans les pages au besoin
+var lblOuvrirTout = 'Afficher tout le contenu';
+var lblFermerTout = 'Masquer tout le contenu';
+
+// Libelles pour paginateur
+var _lblPaginationPage = 'Page';
+var _lblPaginationDe = 'de';
+
+// URL drapeau generique 
+var _urlDrapeauGenerique = '/Images/Temp/icoDrapeaux.gif'
+
+// Pour visionneuse: libelle 'Image' utilise dans slimbox2.js
+var lblVisionneuseTermeImage = "Image {x} de {y}"; 
+
+// Libelle pour le bouton Fermer de la visionneuse
+var libelleCloseLink = "Fermer";
+
+// Libellés pour fermer les bulles d'aide
+var lblBulleAideFermer = "[x] Fermer";
+
+var urlBoutonCalendrier = '/Images/btnCalendrier.gif';
+
+
+var urlObtenirVisionneusePhotos = '/Gabarits/InfrastructuresAvecVisionneuse.aspx/ObtenirVisionneusePhotos';
+var lblAlbumPhotos = 'Album de photos';
+var lblAgrandir = 'Agrandir';
+
+// Le script d'effet ne fonctionne pas sous Internet Explorer, ce script distingue ie des autres fureteurs 
+ if ($.browser.msie) {
+    }
+    else {
+        document.write("<script type='text\/javascript' src='\/scripts/jquery.easing.min.js?version=1.3'><\/script>")
+    }
+//]]>
+ 
+    var valEtatDeputeAncienDeputes = "AncienDeputes";
+
+    var urlObtenirTypeTravauxParSessionLegislature = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeTravauxParSessionLegislature';
+    var urlObtenirTypeTravauxParPeriode = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeTravauxParPeriode';
+    var urlObtenirTypeDocumentParTypeTravaux = '/Gabarits/RechercheAvancee.aspx/ObtenirTypeDocumentParTypeTravaux';
+    var urlObtenirSousCategorieVideoParCategorieVideo = '/Gabarits/RechercheAvancee.aspx/ObtenirSousCategorieVideoParCategorieVideo';
+    
+    var idsSectionRechercheTravauxParlementaires = ['9',
+                                                        '27',
+                                                        '29',
+                                                        '31',
+                                                        '33'];
+
+    var idCategorieDocumentJournauxDebats = '13'
+
+    var msgFormatDateInvalide = "Veuillez saisir une date valide selon le format aaaa-mm-jj.";
+    var msgPeriodeInvalide = "La date de début doit précéder la date de fin.";
+    var msgPeriodeDebutFutur = "La date doit être antérieure ou égale à la date du jour.";
+
+    $(document).ready(function(){
+        $("a").each(function(i, e) {
+            var href = $(e).attr('href');
+            if(href && href.search(/^http:/) == 0){
+                $(e).attr('href', "https:" + href.substring(5));
+            }
+        })
+
+        $("img").each(function (i, e) {
+            var src = $(e).attr('src');
+            if (src && src.search(/^http:/) == 0) {
+                $(e).attr('src', "https:" + src.substring(5));
+            }
+            if (src && src.search(/^https+:/) == 0) {
+                $(e).attr('src', "https:" + src.substring(src.indexOf(":") + 1));
+            }
+        })
+    });
+</script>
+
+<!-- Gestion des cookies. Documentation : http://stilbuero.de/jquery/cookie/ -->
+<script type="text/javascript" src="/scripts/jquery.cookie.min.js"></script>
+
+<!-- Corrige les problème de z-index d'Internet Explorer. Doc: http://brandonaaron.net/jquery/plugins/bgiframe/docs/ -->
+<script type="text/javascript" src="/scripts/jquery.bgiframe.min.js"></script>
+
+<!-- Permet la gestion de l'objet date. -->
+<script type="text/javascript" src="/scripts/date.min.js"></script>
+
+<!-- Génère des paneaux (Tabs) à partir d'une liste (ul li). info et doc: http://docs.jquery.com/UI/Tabs-->
+<script type="text/javascript" src="/scripts/ui.tabs.js"></script>
+
+<!-- Génère l'affichage dynamique d'un liste (ul li). info et doc: http://bassistance.de/jquery-plugins/jquery-plugin-treeview/ -->
+<script type="text/javascript" src="/scripts/jquery.treeview.pack.min.js"></script>
+
+<!-- Permet de modifier la feuille de style. info et doc:http://kelvinluck.com/article/switch-stylesheets-with-jquery -->
+<script type="text/javascript" src="/scripts/StyleSwitcher.min.js"></script>
+
+<!-- Permet de modifier l'apparence des selects. info et doc:http://www.lotsofcode.com/javascript-and-ajax/jquery-select-box-skin.htm -->
+<script type="text/javascript" src="/scripts/jquery.skinned-select.min.js"></script>
+
+<!-- Permet de créer des masques sur les formulaires info et doc:http://digitalbush.com/projects/masked-input-plugin/ -->
+<script type="text/javascript" src="/scripts/jquery.maskedinput-1.3.js"></script>
+
+<!-- Permet de générer un calendrier. docs et info : http://kelvinluck.com/assets/jquery/datePicker/v2/demo/datePickerLocalised.html -->
+<script type="text/javascript" src="/scripts/jquery.datePicker.js"></script>
+
+<!-- Permet de gérer les bulles d'aide en popup -->
+<script type="text/javascript" src="/scripts/BulleAide.min.js"></script>
+
+<!-- Permet de modifier l'apparence des scrollbars. info et doc: http://www.kelvinluck.com/assets/jquery/jScrollPane/jScrollPane.html -->
+<script type="text/javascript" src="/scripts/jScrollPane.min.js"></script>
+
+<!-- Permet d'utiliser des PNG transparent dans IE 6 et 5.5. info et doc: http://jquery.andreaseberhard.de/pngFix/ -->
+<script type="text/javascript" src="/scripts/jquery.pngFix.min.js"></script>
+
+<!-- Permet de trier et de paginer des tableaux. docs et info : http://tablesorter.com -->
+<script type="text/javascript" src="/scripts/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.tablesorter.pager.min.js"></script>
+
+<script type="text/javascript" src="/scripts/jquery.uilock.min.js"></script>
+
+<!-- script general -->
+<script type="text/javascript" src="/scripts/AssNat.min.js"></script>
+
+<script type="text/javascript" src="/Scripts/moment.min.js"></script>
+
+<!-- evenements et gestion du calendrier -->
+<script type="text/javascript" src="/scripts/Calendrier.min.js"></script>
+
+<!-- sert uniquement pour débugger les objets JSON. -->
+<script type="text/javascript" src="/scripts/json.min.js"></script>
+
+
+
+
+
+
+    <!-- Placeholder: permet d'ajouter des enonces specifiques dans le HEAD -->
+    
+
+    <!-- Feuille de style pour le layout de la page -->
+    
+    <link href="/styles/GabGauche-mCentre-l.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <style type="text/css">
+        h2{
+            display: inline-block;
+        }
+    
+    </style>
+
+
+    <!-- Placeholder: remplace automatiquement selon rubrique -->
+    <title>
+	
+            Index du Journal des débats - Assemblée nationale du Québec
+        
+</title>
+        
+        <meta property="og:title" content="Index du Journal des débats - Assemblée nationale du Québec" />
+        <meta property="og:description" content="" />
+        <meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19205" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19207" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19209" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19211" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19213" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19215" />
+<meta property="og:image" content="https://www.assnat.qc.ca/Media/Process.aspx?process=Original&amp;token=ZyMoxNwUn8ikQ+TRKYwPCjWrKwg+vIv9rjij7p3xLGTZDmLVSmJLoqe/vG7/YWzz&amp;asset=ANQ.Vigie.Bll.Image_19217" />
+
+    </head>
+
+<!-- Placeholder: permet de specifier un tag body personnalise (default: <body>) -->
+<body>
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X47H2N" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<form method="post" action="/fr/travaux-parlementaires/journaux-debats/index-jd/43-2.html" id="aspnetForm">
+<div>
+<input type="hidden" name="versionProgrammationEnCache" id="versionProgrammationEnCache" value="0" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJODAwMDQyNjE2D2QWAmYPZBYCAgMQZGQWBAIKD2QWAgIJD2QWAgIBDxBkEBVQPzQzZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDMwIHNlcHRlbWJyZSAyMDI1IC0gOCBhdnJpbCAyMDI2KUQ0M2UgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjkgbm92ZW1icmUgMjAyMiAtIDEwIHNlcHRlbWJyZSAyMDI1KT40MmUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxOSBvY3RvYnJlIDIwMjEgLSAyOCBhb8O7dCAyMDIyKUI0MmUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjcgbm92ZW1icmUgMjAxOCAtIDEzIG9jdG9icmUgMjAyMSk7NDFlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDIwIG1haSAyMDE0IC0gMjMgYW/Du3QgMjAxOCk9NDBlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDMwIG9jdG9icmUgMjAxMiAtIDUgbWFycyAyMDE0KT4zOWUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgyMyBmw6l2cmllciAyMDExIC0gMSBhb8O7dCAyMDEyKUIzOWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTMgamFudmllciAyMDA5IC0gMjIgZsOpdnJpZXIgMjAxMSk8MzhlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDggbWFpIDIwMDcgLSA1IG5vdmVtYnJlIDIwMDgpPjM3ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDE0IG1hcnMgMjAwNiAtIDIxIGbDqXZyaWVyIDIwMDcpOjM3ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICg0IGp1aW4gMjAwMyAtIDEwIG1hcnMgMjAwNik6MzZlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjIgbWFycyAyMDAxIC0gMTIgbWFycyAyMDAzKTkzNmUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMiBtYXJzIDE5OTkgLSA5IG1hcnMgMjAwMSk9MzVlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjUgbWFycyAxOTk2IC0gMjEgb2N0b2JyZSAxOTk4KT8zNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjkgbm92ZW1icmUgMTk5NCAtIDEzIG1hcnMgMTk5Nik6MzRlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMTcgbWFycyAxOTk0IC0gMTcganVpbiAxOTk0KTozNGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxOSBtYXJzIDE5OTIgLSAxMCBtYXJzIDE5OTQpPzM0ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgyOCBub3ZlbWJyZSAxOTg5IC0gMTggbWFycyAxOTkyKTkzM2UgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICg4IG1hcnMgMTk4OCAtIDkgYW/Du3QgMTk4OSk/MzNlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDE2IGTDqWNlbWJyZSAxOTg1IC0gOCBtYXJzIDE5ODgpQDMyZSBsw6lnaXNsYXR1cmUsIDVlIHNlc3Npb24gKDE2IG9jdG9icmUgMTk4NCAtIDEwIG9jdG9icmUgMTk4NSk6MzJlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMjMgbWFycyAxOTgzIC0gMjAganVpbiAxOTg0KT0zMmUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICg5IG5vdmVtYnJlIDE5ODEgLSAxMCBtYXJzIDE5ODMpQTMyZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDMwIHNlcHRlbWJyZSAxOTgxIC0gMiBvY3RvYnJlIDE5ODEpOjMyZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxOSBtYWkgMTk4MSAtIDE4IGp1aW4gMTk4MSk9MzFlIGzDqWdpc2xhdHVyZSwgNmUgc2Vzc2lvbiAoNSBub3ZlbWJyZSAxOTgwIC0gMTIgbWFycyAxOTgxKUAzMWUgbMOpZ2lzbGF0dXJlLCA1ZSBzZXNzaW9uICgyNCBvY3RvYnJlIDE5ODAgLSAyNCBvY3RvYnJlIDE5ODApOTMxZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDYgbWFycyAxOTc5IC0gMTgganVpbiAxOTgwKUIzMWUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgyMSBmw6l2cmllciAxOTc4IC0gMjAgZsOpdnJpZXIgMTk3OSk+MzFlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoOCBtYXJzIDE5NzcgLSAyMiBkw6ljZW1icmUgMTk3NylFMzFlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDE0IGTDqWNlbWJyZSAxOTc2IC0gMjMgZMOpY2VtYnJlIDE5NzYpPTMwZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDE2IG1hcnMgMTk3NiAtIDE4IG9jdG9icmUgMTk3Nik/MzBlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMTggbWFycyAxOTc1IC0gMTkgZMOpY2VtYnJlIDE5NzUpPzMwZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDE0IG1hcnMgMTk3NCAtIDI4IGTDqWNlbWJyZSAxOTc0KUQzMGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMjIgbm92ZW1icmUgMTk3MyAtIDIyIGTDqWNlbWJyZSAxOTczKT8yOWUgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgxNSBtYXJzIDE5NzMgLSAyNSBzZXB0ZW1icmUgMTk3Myk5MjllIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoNyBtYXJzIDE5NzIgLSAxNCBtYXJzIDE5NzMpQzI5ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDIzIGbDqXZyaWVyIDE5NzEgLSAyNCBkw6ljZW1icmUgMTk3MSk/MjllIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDkganVpbiAxOTcwIC0gMTkgZMOpY2VtYnJlIDE5NzApPjI4ZSBsw6lnaXNsYXR1cmUsIDVlIHNlc3Npb24gKDI0IGbDqXZyaWVyIDE5NzAgLSAxMiBtYXJzIDE5NzApQzI4ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDI1IGbDqXZyaWVyIDE5NjkgLSAyMyBkw6ljZW1icmUgMTk2OSlDMjhlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMjAgZsOpdnJpZXIgMTk2OCAtIDE4IGTDqWNlbWJyZSAxOTY4KUAyOGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgyMCBvY3RvYnJlIDE5NjcgLSAyMCBvY3RvYnJlIDE5NjcpQDI4ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxIGTDqWNlbWJyZSAxOTY2IC0gMTIgYW/Du3QgMTk2Nyk+MjdlIGzDqWdpc2xhdHVyZSwgNmUgc2Vzc2lvbiAoMjUgamFudmllciAxOTY2IC0gMTggYXZyaWwgMTk2NilAMjdlIGzDqWdpc2xhdHVyZSwgNWUgc2Vzc2lvbiAoMjIgb2N0b2JyZSAxOTY1IC0gMjMgb2N0b2JyZSAxOTY1KT0yN2UgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgyMSBqYW52aWVyIDE5NjUgLSA2IGFvw7t0IDE5NjUpQDI3ZSBsw6lnaXNsYXR1cmUsIDNlIHNlc3Npb24gKDE0IGphbnZpZXIgMTk2NCAtIDMxIGp1aWxsZXQgMTk2NCk8MjdlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMjEgYW/Du3QgMTk2MyAtIDIzIGFvw7t0IDE5NjMpQTI3ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxNSBqYW52aWVyIDE5NjMgLSAxMSBqdWlsbGV0IDE5NjMpPjI2ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDEwIG5vdmVtYnJlIDE5NjAgLSAxMCBqdWluIDE5NjEpRTI2ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgyMCBzZXB0ZW1icmUgMTk2MCAtIDIyIHNlcHRlbWJyZSAxOTYwKT4yNWUgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICgxOCBub3ZlbWJyZSAxOTU5IC0gMTggbWFycyAxOTYwKT0yNWUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgxOSBub3ZlbWJyZSAxOTU4IC0gNSBtYXJzIDE5NTkpQjI1ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDEzIG5vdmVtYnJlIDE5NTcgLSAyMSBmw6l2cmllciAxOTU4KUMyNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTQgbm92ZW1icmUgMTk1NiAtIDIxIGbDqXZyaWVyIDE5NTcpQjI0ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDE2IG5vdmVtYnJlIDE5NTUgLSAyMyBmw6l2cmllciAxOTU2KUEyMGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoNyBvY3RvYnJlIDE5MzYgLSAxMiBub3ZlbWJyZSAxOTM2KT4xOGUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxMCBqYW52aWVyIDE5MzMgLSAxMyBhdnJpbCAxOTMzKUIxOGUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMyBub3ZlbWJyZSAxOTMxIC0gMTkgZsOpdnJpZXIgMTkzMik8MTdlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoOCBqYW52aWVyIDE5MjkgLSA0IGF2cmlsIDE5MjkpPTE2ZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDExIGphbnZpZXIgMTkyNyAtIDEgYXZyaWwgMTkyNyk8MTZlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoNyBqYW52aWVyIDE5MjYgLSAyNCBtYXJzIDE5MjYpQDE2ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICgxNyBkw6ljZW1icmUgMTkyMyAtIDE1IG1hcnMgMTkyNClCMTVlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMjQgb2N0b2JyZSAxOTIyIC0gMjkgZMOpY2VtYnJlIDE5MjIpPTE1ZSBsw6lnaXNsYXR1cmUsIDNlIHNlc3Npb24gKDEwIGphbnZpZXIgMTkyMiAtIDIxIG1hcnMgMTkyMik9MTVlIGzDqWdpc2xhdHVyZSwgMmUgc2Vzc2lvbiAoMTEgamFudmllciAxOTIxIC0gMTkgbWFycyAxOTIxKUQxNWUgbMOpZ2lzbGF0dXJlLCAxcmUgc2Vzc2lvbiAoMTAgZMOpY2VtYnJlIDE5MTkgLSAxNCBmw6l2cmllciAxOTIwKT0xNGUgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICgyMSBqYW52aWVyIDE5MTkgLSAxNyBtYXJzIDE5MTkpQTE0ZSBsw6lnaXNsYXR1cmUsIDJlIHNlc3Npb24gKDQgZMOpY2VtYnJlIDE5MTcgLSA5IGbDqXZyaWVyIDE5MTgpQzE0ZSBsw6lnaXNsYXR1cmUsIDFyZSBzZXNzaW9uICg3IG5vdmVtYnJlIDE5MTYgLSAyMiBkw6ljZW1icmUgMTkxNik9MTNlIGzDqWdpc2xhdHVyZSwgNGUgc2Vzc2lvbiAoMTEgamFudmllciAxOTE2IC0gMTYgbWFycyAxOTE2KTsxM2UgbMOpZ2lzbGF0dXJlLCAzZSBzZXNzaW9uICg3IGphbnZpZXIgMTkxNSAtIDUgbWFycyAxOTE1KUIxM2UgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxMSBub3ZlbWJyZSAxOTEzIC0gMTkgZsOpdnJpZXIgMTkxNClDMTNlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDUgbm92ZW1icmUgMTkxMiAtIDIxIGTDqWNlbWJyZSAxOTEyKTwxMmUgbMOpZ2lzbGF0dXJlLCA0ZSBzZXNzaW9uICg5IGphbnZpZXIgMTkxMiAtIDMgYXZyaWwgMTkxMik9MTJlIGzDqWdpc2xhdHVyZSwgM2Ugc2Vzc2lvbiAoMTAgamFudmllciAxOTExIC0gMjQgbWFycyAxOTExKTkxMmUgbMOpZ2lzbGF0dXJlLCAyZSBzZXNzaW9uICgxNSBtYXJzIDE5MTAgLSA0IGp1aW4gMTkxMCk5MTJlIGzDqWdpc2xhdHVyZSwgMXJlIHNlc3Npb24gKDIgbWFycyAxOTA5IC0gMjkgbWFpIDE5MDkpOjExZSBsw6lnaXNsYXR1cmUsIDRlIHNlc3Npb24gKDMgbWFycyAxOTA4IC0gMjUgYXZyaWwgMTkwOCkVUFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvNDMtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC80My0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzQyLTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvNDItMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC80MS0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzQwLTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzktMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zOS0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzM4LTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzctMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zNy0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzM2LTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzYtMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zNS0yLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzM1LTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzQtMy5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zNC0yLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzM0LTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzMtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMy0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzMyLTUuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzItNC5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMi0zLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzMyLTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzItMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMS02Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzMxLTUuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzEtNC5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMS0zLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzMxLTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzEtMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMC00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzMwLTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMzAtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8zMC0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI5LTQuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjktMy5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yOS0yLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI5LTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjgtNS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yOC00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI4LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjgtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yOC0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI3LTYuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjctNS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yNy00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI3LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjctMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yNy0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI2LTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjYtMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yNS00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI1LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjUtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8yNS0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzI0LTQuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMjAtMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xOC0yLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzE4LTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTctMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xNi00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzE2LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTYtMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xNS00Lmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzE1LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTUtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xNS0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzE0LTMuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTQtMi5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xNC0xLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzEzLTQuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTMtMy5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xMy0yLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzEzLTEuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTItNC5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xMi0zLmh0bWxVaHR0cHM6Ly93d3cuYXNzbmF0LnFjLmNhL2ZyL3RyYXZhdXgtcGFybGVtZW50YWlyZXMvam91cm5hdXgtZGViYXRzL2luZGV4LWpkLzEyLTIuaHRtbFVodHRwczovL3d3dy5hc3NuYXQucWMuY2EvZnIvdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvMTItMS5odG1sVWh0dHBzOi8vd3d3LmFzc25hdC5xYy5jYS9mci90cmF2YXV4LXBhcmxlbWVudGFpcmVzL2pvdXJuYXV4LWRlYmF0cy9pbmRleC1qZC8xMS00Lmh0bWwUKwNQZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAILD2QWAgIJD2QWAmYPZBYCZg8VAj0vZW4vdHJhdmF1eC1wYXJsZW1lbnRhaXJlcy9qb3VybmF1eC1kZWJhdHMvaW5kZXgtamQvNDMtMi5odG1sB0VuZ2xpc2hkGAEFNGN0bDAwJFNvdXNOYXZpZ2F0aW9uUGxhY2VIb2xkZXIkU291c05hdmlnYXRpb24kTWVudTEPD2QFSFRyYXZhdXggcGFybGVtZW50YWlyZXNcSm91cm5hbCBkZXMgZMOpYmF0cyBcSW5kZXggZHUgSm91cm5hbCBkZXMgZMOpYmF0c2Ry5b5UwD/nPeTF53FfQSXOQtqPew==" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="44A84FC0" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAFuDRqm1PRS+M1XQbCeCHJtl3hH/puXvwl4FGZa6rYP8j7zfnYlPDIamE8E+dcJv2yNRp83N/O0QT2EKdZy1Z93ZrnSKbGe91R2gDc8cEHMcYcIDectgFr1wq++j8PHWbIi/s8EDh1x3R6aY4MfFs+MGtUXBRNk1FJ6pFFT1ymLFTPWVw2dr4mnyTx4z66osZkZdZpdZ29H6f6f6XBB8Ag0aCEVffcW6dknc1WaEyjC+zUixHs+GmFb/FmV53nD+XYAqXZ7xXBvWCSiajMb3fMzux0Ztgf2PL8edjfs6LHQiqvtT4K1L38Dvzlkk1fakx/aXOwbb8rIoT3Ys61UwZv/IBgn0wVS75WaLTwWCOdOoi3KjcnebaimarPEIiY03ZK1fRIHv7TeCo8tjBfgAYqaeF5bVYaFCeQ4su0mVU9u3VBv3RrbdW0WO9Ef0bWhaIJXiiDonhx5btofk0bgGUrzSxngYx/zkJUumaAplRDOL7dzSjA3Zcs0lyfmtqWU6RyCO2BXwkhIbIi0ex9NdMClmM6+6aWa9PC9Do6Zf0nxkjrj/qEad6jGgtHYgyg/ce8k6fHw8D0lWFp2xDHvDZTYlkTkz+hnr+Qq7148ouY70963ObErMUH0o+GBFreT74R96trramUwxcB3Iosa1F2Miy+F1QwdeBtJmzalsqv1heS9UCSBGiV8KoRK4NdLuptzAl7Rp3j/VJlTOdsiG5+VTw5QwvchXwEn4zQSRe0Ap+g340PeM8JUhx8SkcFYkUdPPm5RXxUkIQQlkVNZ4E0s93cWBmPLGwXXJg1vtSASsdP7dDFK6t/EdnkU6akUt8k+EyU0ud2OdUIVkUS6DS9THlnvfuLgotKhyU7oq45fiHCWmltTsVUKKkr4hwOQAEu+N172RHejzE4oRDCtp6kaDdNaXjGxu0r8NMCBS9sPPb3ABIPkwOt+m0pwDI4ULyIVKMHRHW/i7LRU3+9D5TsCDUhaaklexR159QH0UR22Fq9PyV5L9VQdWoy4K/K5GiXuUi3EML3JL8z7EpeXOnHUjNk++nbhvU+5KEu4BIN4ZvJhckWR6OHBTqMnwNO+wKKiTmITNsl5213AqjuPCPy2dazjj5vhntRHjMaC4ddtsqg+VbP8XaqwEZU1vOAruabUUJEPsDDklWAgMUOrWavodH119h0ObSPsZeOUn9B1U1NuRN5C02ymg5K2xyixMtqM5++rQNQH3kG2XYM6IfYTc2Pd1gTobjshN1duS4KVBNvucyEnNRXpdPojBSrZ8tdmaqXiwOfZCC2C0BLtZRRukymMzbKnfhdg7jvcJtKf13wP8KESlHX4eyn1UfA6/3iheU7ochY6t737QEsqPCwMLoHXmGsVy2qZGR0YYllxvqgC8FpQMyxL2DeRAOnC1NysCqfEsoIGzgG9lYnolpc51QVIJPEm9uJP3ex0fqk4LlKBkSkpJbIIR91t6FvV7etfobeyrVEqJUmejS5wvea44p8MOBqACzumnHI3yApAvFKvOMOM+fvDM2+rCE8IGgFMdEhMwwyWI+GLvYbMQDCTZ3+rzdb8n3lkSzFQSXfw0PXrliacN+ZliG7ZRWsa0qV0aEUZyt2xoQrpuiCDv7PhpUBazt3PCxzP0pxAkOS2rFwjJwOHZGVyGug03L+DOnC+DeSkjDRhzuAkGkHNNECsAcgOVh+ayXS9tooR8zqFIveYU9YOVLQb7AwtOmNNWRG0YV0gnE1kCfyqUMES8Z1ftk8ErNG6UaVaFOMmY8jtm8jx0FDwbpv+qEDEq3AQIO+vqPltMuE96xvkpvgD18W/WqYQd+sRfVfCadNZD/9OQ6FfAnTxiqwLwiVG3hV5E0RN/K2z6hUfpLookTIHDpEl4SUT7TQhYzVo02wufyQOhWOunvr2OHZroW6WSXpb8O1qtS5vN+pdPgCeMFcT7ziYuM16O+Z552bj1ALEVUxPwDn0JdcY=" />
+</div>
+    <div id="Wrap">
+
+        <!-- Utilitaires: impression, agrandir texte, recherche, etc -->
+        
+
+
+<script type="text/javascript">
+    var motCleDefaut = 'Rechercher';
+</script>
+
+<a name="haut"></a>
+<div id="enteteUtilitaire">
+    <div id="skip" class="skiplinks">
+        <a href="#ancreContenuPrincipal">Atteindre le contenu</a>
+        <a href="#ancreSousNavigation">Atteindre la navigation secondaire</a>               
+    </div>
+    <div class="listeUtilitaires listeUtilitaires2">
+        <ul>
+            <li class="Premier">
+                <a class="sanssouligne nePasRediriger icoMobile" href="https://m.assnat.qc.ca">
+                    <span class="styleHyperlien">Mobile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/fr/accueil/mediassociaux.html" class="sanssouligne icoMediasSociauxEntete">
+                    <span class="styleHyperlien" style="margin-right:45px;">Suivez-nous</span>
+                    <span class="visuallyhidden"> sur les médias sociaux, Facebook, X, Youtube</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="listeUtilitaires">
+        <ul>
+            <li><a id="A2" href="https://www.assnat.qc.ca/carrieres">Carrières</a></li>
+            <li><a href="/fr/nous-joindre.html" id="ctl00_Utilitaires_A1">Nous joindre</a></li>
+            <li>
+                <div class="outilRecherche">
+                    <label for="ctl00_Utilitaires_motCle" class="nepasafficher">Saisir un mot clé pour faire une recherche générale</label>
+                    <input type="text" id="ctl00_Utilitaires_motCle" class="outilRechercheMotCle" />
+                    <input onclick="RechercherMotCle();return false;" type="image" src="/Images/btnRecherche_of.gif" class="btnRechercheGlobal" title="Rechercher" alt="Rechercher"/>
+                </div>
+            </li>
+            <li>
+                <a onclick="LancerRechercheAvancee();return false;" tabindex="0">Recherche avancée</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    function RechercherMotCle() {
+        var mot = $('#ctl00_Utilitaires_motCle');
+        if (mot.val() != "")
+        {
+            window.location = '/fr/recherche/recherche-avancee.html?SectionRecherche=-1&MotsCles=' + encodeURIComponent(htmlEscape(mot.val()));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var link = document.querySelector('a[onclick="LancerRechercheAvancee();return false;"]');
+
+        link.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                LancerRechercheAvancee();
+                event.preventDefault();
+            }
+        });
+    });
+
+    function LancerRechercheAvancee() {
+        var urlRechercheAvancee = '/fr/recherche/recherche-avancee.html';
+        window.location = urlRechercheAvancee + "?EstNouvelleRecherche=true";
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Banniere: image d'entete -->
+        
+<div id="Banniere">
+	<a href="/fr/index.html" class="sanssouligne" title="Assemblée nationale du Québec - Retour à l&#39;accueil">
+    <img class="nepasafficher" width="88" height="58" title="Assemblée nationale du Québec - Retour à l'accueil" alt="Assemblée nationale du Québec - Retour à l'accueil" src='/images/transparent.gif' /></a>
+</div>
+
+
+        <!-- NavigationPrincipale: menu horizontal -->
+        
+
+<div id="NavigationPrincipaleConteneur">
+    <div id="NavPrincipaleNiveau1">
+        <ul>
+            <li class="btnAccueil">
+                <a href="/fr/index.html" id="ctl00_NavigationPrincipale_hrfAcceuil">
+                    Accueil</a></li>
+            <li aria-haspopup="true" class='menuHoverParent btnDeputes'><a href="/fr/deputes/index.html" id="ctl00_NavigationPrincipale_hrfDeputes">
+                Députés</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10006.html">La présidente</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10002.html#listeDeputes">Liste des députés en fonction</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11861.html">Les députés depuis 1764</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10002.html#listeDeputes">Coordonnées des députés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10042.html">La fonction de député</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10014.html">Fonctions parlementaires des députés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10020.html">Composition des commissions</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10028.html">Membres du Bureau de l'Assemblée</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10052.html">Indemnités et allocations</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/deputes/cerclefemmes/index.html">Cercle des femmes parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12661.html">Cercle des jeunes parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10965.html">Cercle des ex-parlementaires de l’Assemblée nationale du Québec</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12603.html">Fondation Jean-Charles-Bonenfant </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12605.html">Fondation des parlementaires québécois Cultures à partager </a></li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnTravaux'>
+                <a href="/fr/travaux-parlementaires/index.html" id="ctl00_NavigationPrincipale_hrfTravauxParlementaires">
+                    Travaux parlementaires</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12119.html">Calendrier hebdomadaire des travaux</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12213.html">Journal des débats</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11867.html">Index du Journal des débats</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10114.html#procedure">Règlement et autres règles de procédure de l'Assemblée nationale</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10114.html#procedure">Propos non parlementaires</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10044.html">Assister aux travaux</a></li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10118.html">Travaux de l'Assemblée</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10118.html">Toutes les séances</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10198.html">Documents déposés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10192.html">Projets de loi</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12215.html">Cheminement des projets de loi</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12779.html">Registre des votes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Travaux des commissions</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Liste des commissions</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11185.html">Mandats en cours</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10198.html">Documents déposés</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10140.html">Rapports et documents de réflexion</a></li>
+</ul>
+</li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnExprimez'>
+                <a href="/fr/exprimez-votre-opinion/index.html" id="ctl00_NavigationPrincipale_hrfExprimezVotreOpinion">
+                    Exprimez votre opinion!</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10999.html">Pétitions</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11001.html">Signer une pétition électronique</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11003.html">Consulter une pétition présentée à l'Assemblée</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10108.html">Lancer une pétition</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/exprimez-votre-opinion/petition/cheminement-petition">Suivre le cheminement d'une pétition</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10901.html">Consultations publiques</a></strong> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10901.html#CommentParticiper">Comment participer à une consultation</a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/10126.html">Liste des consultations publiques</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10997.html">Commenter un sujet à l'étude</a></strong></li>
+</ul>
+<ul>
+<li><strong><a href="https://www.assnat.qc.ca/fr/lien/10110.html">Présenter un projet de loi d'intérêt privé</a></strong></li>
+</ul>
+                        
+                </div>
+            </li>
+            <li aria-haspopup="true" class='menuHoverParent btnVideoAudio'>
+                <a href="/fr/video-audio/index.html" id="ctl00_NavigationPrincipale_hrfVideoAudio">
+                    Vidéo</a>
+                <div class='menuHoverEnfant'>
+                    
+                            <ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12541.html"><strong>En direct et webdiffusions à venir</strong></a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12543.html"><strong>Archives des travaux et activités parlementaires</strong></a> 
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12545.html">Travaux de l'Assemblée </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12559.html">Travaux des commissions</a> </li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12547.html">Activités de presse </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12549.html">Activités spéciales et institutionnelles</a> </li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12551.html">Députés</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12553.html"><strong>Le Canal de l'Assemblée</strong></a> </li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12555.html"><strong>Émissions et capsules promotionnelles</strong></a></li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12561.html"><strong>Espace jeunesse</strong></a> </li>
+</ul>
+<ul>
+<li><a href="https://www.assnat.qc.ca/fr/lien/11183.html"><strong>Commander un extrait</strong></a> </li>
+</ul>
+                        
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- PlaceHolder: permet de masquer le calendrier sommaire (defaut: s'affiche) -->
+        
+				
+
+<script type="text/javascript">
+</script>
+
+<div class="calendrier calSommaire" id="Calendrier">
+    <div class="titreCalendrier" id="TitreCalendrier">
+        <ul>
+            <li class="btnCalendrier" id="btnCalendrier">
+                <a href="javascript:void(0)" id="ctl00_CalendrierSommaire_CalendrierSommaire1_LienCalendrier">
+                    Calendrier
+                    <p class="libelleOuvrirFermer">
+                    Ouvrir</p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="contenuCalendrier" id="ContenuCalendrier">
+        <div class="contenuCalendrierInterne" style="display: none">
+            <div class="overlayCalendrier">
+                <p class="contenuOverlay">
+                    <img src="/Images/lightbox/loading.gif" alt="Chargement en cours"
+                        title="Chargement en cours" />
+                </p>
+            </div>
+            <div class="blocAssembleeEnDirect">
+                <ul class="listeIconesHorizontale">
+                    <li id="IconeEnDirectCalendrier" class="icoEnDirectInactif"><span id="spnEnDirectCalendrier" tabindex="0">
+                        En direct</span></li>
+                    <li><a class="anchorCalendrierDetaille" href='/fr/calendrier-detaille.html'>
+                        Calendrier détaillé</a></li>
+                </ul>
+            </div>
+            <div class="blocNavigateurDates">
+                <div>
+                    <p id="ConteneurCalendrierPopup">
+                        <span class="calendrierPopup"></span>
+                    </p>
+                    <h2 id="TitreDateDuJour">_date_du_jour
+                    </h2>
+                </div>
+                <ul>
+                    <li class="versGauche"><a href="#" class="dateNavigateur fleche" id="dateNavGauche"><img alt="Semaine précédente" title="Semaine précédente"
+                        src='/Images/transparent.gif' width="15" height="25"/></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavDi" title="_dimanche" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">DIM</span><br />
+                        <span class="libelleDate">6</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavLu" title="_lundi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">LUN</span><br />
+                        <span class="libelleDate">7</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavMa" title="_mardi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">MAR</span><br />
+                        <span class="libelleDate">8</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavMe" title="_mercredi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">MER</span><br />
+                        <span class="libelleDate">9</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavJe" title="_jeudi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">JEU</span><br />
+                        <span class="libelleDate">10</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavVe" title="_vendredi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">VEN</span><br />
+                        <span class="libelleDate">11</span></a></li>
+                        
+                    <li><a class="dateNavigateur" id="dateNavSa" title="_samedi" href="#">
+                        <span class="overlayJour overlayJourSommaire"></span>
+                        <span class="libelleJournee">SAM</span><br />
+                        <span class="libelleDate">12</span></a></li>
+                        
+                    <li class="versDroite"><a href="#" class="dateNavigateur fleche" id="dateNavDroite">
+                        <img alt="Semaine suivante" title="Semaine suivante"
+                        src='/Images/transparent.gif' width="15" height="25"/></a></li>
+                </ul>
+                <span class="aujourdhui"><a class="aujourdhuiLien" href=''>
+                    Aujourd'hui</a></span>
+            </div>
+            <hr />
+            <div class="blocEnCours" style="display: none">
+                <div class="blocEnCoursTitre">
+                    <h3 id="HeureEnCours" class="heure">_heure_en_cours
+                    </h3>
+                    <h3>
+                        En cours</h3>
+                </div>
+                <div class="boiteDefilante">
+                </div>
+            </div>
+            <div class="blocActivitesDuJour">
+                <h3><label for="ctl00_CalendrierSommaire_CalendrierSommaire1_selectFiltreCategorieActivite">Activités du jour</label></h3>
+                <div class="my-skinnable-select">
+                    <select name="ctl00$CalendrierSommaire$CalendrierSommaire1$selectFiltreCategorieActivite" id="ctl00_CalendrierSommaire_CalendrierSommaire1_selectFiltreCategorieActivite" class="selectFiltreCategorieActivite">
+	<option selected="selected" value="*"></option>
+
+</select>
+                </div>
+                <div class="boiteDefilante">
+                </div>
+            </div>
+            <div class="blocExpositions" style="display: none">
+                <h3>
+                    Exposition(s)</h3>
+                <div id="listeExpositions">
+                </div>
+            </div>
+            <div class="blocSurLesTours" id="BlocSurLesTours" style="display: none">
+                <h3>
+                    Drapeau(x) sur l'hôtel du Parlement</h3>
+                <div id="listeDrapeaux">
+                </div>
+            </div>
+        </div>
+        <p id="calendrierNoJs">
+            L'utilisation du calendrier requiert que Javascript soit activé dans votre navigateur.<br />
+            <a href='/fr/aide/aide-recherche.html#javascript'>
+                Pour plus de renseignements</a>
+        </p>
+    </div>
+</div>
+
+			
+
+        <!-- NavigationPrincipaleNiveau2: menu horizontal -->
+        
+
+<div id="NavigationPrincipaleNiveau2Conteneur">
+    <div id="NavPrincipaleNiveau2">
+        <ul>
+            <li class='' id="lienABC"><a href="/fr/abc-assemblee/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfABCDeLassemblee">
+                L'ABC de l'Assemblée</a></li>
+            <li class='' id="lienVisiteurs"><a href="/fr/visiteurs/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfVisiteurs">
+                Visiteurs</a></li>
+            <li class='' id="lienRestaurants"><a href="/fr/visiteurs/restaurants/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfRestaurants">
+                Restaurants</a></li>
+            <li class='' id="lienActualites"><a href="/fr/actualites-salle-presse/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfActualiteEtSalleDePresse">
+                Actualités et salle de presse</a></li>
+            <li class='' id="lienBibliotheque">
+                <a href="/fr/bibliotheque/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfBibliotheque">
+                    Bibliothèque</a></li>
+            <li class='' id="lienPublications">
+                <a href="/fr/publications/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfPublications">
+                    Publications</a></li>
+            <li class='' id="lienEducatives">
+                <a href="http://www.paricilademocratie.com" id="ctl00_NavigationPrincipaleNiveau2_hrfActivitesEducatives">
+                    Éducation</a></li>
+            <li class='' id="lienInternational">
+                <a href="/fr/diplomatie/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfInternational">
+                    Diplomatie</a></li>
+            <li class='' id="lienHistoire"><a href="/fr/patrimoine/index.html" id="ctl00_NavigationPrincipaleNiveau2_hrfHistoire">
+                Histoire</a></li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- FilAriane: affiche le fil d'ariane -->
+        
+				
+<div id="FilAriane" class="FilAriane">
+<span id="ctl00_FilAriane_FilAriane1_SiteMapPath1"><span><a href="/fr/index.html">Accueil</a></span><span> &gt; </span><span><a href="/fr/travaux-parlementaires/index.html">Travaux parlementaires</a></span><span> &gt; </span><span><a href="/fr/travaux-parlementaires/journaux-debats.html">Journal des d&#233;bats </a></span><span> &gt; </span><span>Index du Journal des d&#233;bats</span></span>
+</div>
+			
+
+        
+            
+
+        <!-- Ancre pour le "skiplink atteindreSousNavigation" -->
+        <div id="divAncreSousNavigation" class="skipLinks">
+            <a name="ancreSousNavigation" id="ancreSousNavigation"></a>
+        </div>
+
+        <div class="ColGauche colonne">
+
+            <!-- PlaceHolder: permet de masquer la navigation secondaire (defaut: s'affiche) -->
+            
+                    
+<div id="SousNavigation" class="ContenuNavigation SousNavigation">
+
+
+	
+	<ul>
+		<li>
+			<h2><a href="/fr/travaux-parlementaires/index.html" class="selected">
+				Travaux parlementaires</a></h2>
+			<ul>
+				<li>
+					<a href="/fr/travaux-parlementaires/journaux-debats.html" class="selected">
+						Journal des débats </a>
+					<ul>
+						<li>
+							<a href="/fr/travaux-parlementaires/journaux-debats/index-jd/index.html" class="selected">
+								Index du Journal des débats</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/assemblee-nationale/index.html" class="">
+						Travaux de l'Assemblée</a>
+					<ul>
+						<li>
+							<a href="/fr/travaux-parlementaires/registre-des-votes/index.html" class="">
+								Registre des votes</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/commissions/index.html" class="">
+						Travaux des commissions</a>
+					<ul>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cap/index.html" class="">
+								Administration publique</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/capern/index.html" class="">
+								Agriculture, pêcheries, énergie et ressources naturelles</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cat/index.html" class="">
+								Aménagement du territoire</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/can/index.html" class="">
+								Assemblée nationale</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cce/index.html" class="">
+								Culture et éducation</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cet/index.html" class="">
+								Économie et travail</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cfp/index.html" class="">
+								Finances publiques</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/ci/index.html" class="">
+								Institutions</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/crc/index.html" class="">
+								Relations avec les citoyens</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/csss/index.html" class="">
+								Santé et services sociaux</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/cte/index.html" class="">
+								Transports et environnement</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/mandats-encours-commissions.html" class="">
+								Mandats en cours</a>
+						</li>
+						<li>
+							<a href="/fr/travaux-parlementaires/commissions/rapports-documents-reflexion/index.html" class="">
+								Rapports et documents de réflexion</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/projets-loi/rapport/index.html" class="">
+						Cheminement des projets de loi</a>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/projets-loi/index.html" class="">
+						Projets de loi</a>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/documents-deposes.html" class="">
+						Documents déposés </a>
+					<ul>
+						<li>
+							<a href="/fr/travaux-parlementaires/documents-deposes/depots-du-jour.html" class="">
+								Dépôts du jour </a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="/fr/travaux-parlementaires/calendrier-travaux.html" class="">
+						Calendrier hebdomadaire des travaux </a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	
+  <div class="clear"></div>
+</div>
+
+
+<script type="text/javascript">
+
+</script>        
+				
+
+            <!-- PlaceHolder: permet d'ajouter du contenu sous la navigation secondaire (defaut: vide) -->
+            
+
+        </div>
+
+        <div class="ColCentre colonne Contenu">
+
+            <!-- PlaceHolder: permet d'afficher une accroche (defaut: vide) -->
+            
+
+            <!-- PlaceHolder: conteneur pour tout le contenu excepte la navigation -->
+            
+	            				
+					<!-- PlaceHolder: permet de masquer les utilitaires d'Assemblee (defaut: s'affiche) -->
+					
+						
+
+<div class="utilitairesAssemblee" id="utilitairesAssemblee">
+    <div id="ColIconesUtilitairesAssemblee">
+        <div id="ColOutilsUtilitairesAssemblee">
+            <ul class="utilitairesAssemblee listeSansPuces">
+                <li>
+                    <a href="javascript:ImprimerBase()">
+			            <img alt="Imprimer la page" title="Imprimer la page"
+                        src='/Images/icones/partageImprimante.gif' width="16" height="16"/></a>
+                </li>
+                <li class="styleswitch">
+                    <a href="#Reguliere" rel="Reguliere" class="styleswitch Reguliere">
+                        <img alt="Taille du texte : régulière" title="Taille du texte : régulière" src='/Images/icones/retrecir.gif' width="16" height="16"/></a>
+                    <a href="#Grande" rel="Grande" title="Taille du texte : très grande" class="styleswitch Grande">
+                        <img alt="Taille du texte : très grande" title="Taille du texte : très grande" src='/Images/icones/agrandir.gif' width="16" height="16"/></a>
+                </li>
+                <li>
+                    <a href='/fr/fils-rss.html' class="nePasRediriger">
+                        <img alt="Fils RSS" title="Fils RSS"
+                        src='/Images/icones/partageRss.gif' width="16" height="16"/></a>
+                </li>
+            </ul>
+        </div>
+  
+            
+        <div id="ColPartageUtilitairesAssemblee">
+            <div class="boutonPartager">
+                <a href="#">Partager</a>
+            </div>
+            <ul class="utilitairesAssemblee listeSansPuces" style="z-index:999;">
+                <div class="fleche"></div>
+                    <li>
+                        <a target="_blank" href='https://www.facebook.com/sharer/sharer.php?u=http://www.assnat.qc.ca%2ffr%2ftravaux-parlementaires%2fjournaux-debats%2findex-jd%2f43-2.html' class="nePasRediriger">
+                            <img alt="Partager par Facebook" title="Partager par Facebook"
+                            src='/Images/icones/partageFacebook.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='https://x.com/intent/tweet?url=http://www.assnat.qc.ca%2ffr%2ftravaux-parlementaires%2fjournaux-debats%2findex-jd%2f43-2.html' class="nePasRediriger">
+                            <img alt="Partager par X" title="Partager par X"
+                            src='/Images/icones/partageTwitter.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='https://www.linkedin.com/sharing/share-offsite/?url=http://www.assnat.qc.ca%2ffr%2ftravaux-parlementaires%2fjournaux-debats%2findex-jd%2f43-2.html' class="nePasRediriger">
+                            <img alt="Partager par LinkedIn" title="Partager par LinkedIn"
+                            src='/Images/icones/partageLinkedin.gif' /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href='/fr/envoyer-ami.html?lienurl=%2ffr%2ftravaux-parlementaires%2fjournaux-debats%2findex-jd%2f43-2.html' class="nePasRediriger">
+                            <img alt="Partager par courriel" title="Partager par courriel"
+                            src='/Images/icones/partageCourriel.gif' /></a>
+                    </li>
+            </ul>
+        </div>
+        
+    </div>
+    <div id="ColLiensUtilitairesAssemblee">
+        <ul class="listeIconesHorizontale listeIconesHorizontaleUtilitaires listeSansPuces">
+            <!-- Icone "Diagramme de l'Assemblée" -->
+		    
+			    <li class="icoDiagramme">
+                    <a href="/fr/document/19787.html">Diagramme de l'Assemblée</a>
+                </li>
+		    
+
+            <li id="IndicateurEnDirectPage">
+                <span id="spnEnDirect" class="styleHyperlien">
+		            <span id="IconeEnDirect" class="icoEnDirect"> </span>		
+		            En direct sur le Web
+	            </span>
+            </li>
+            <!-- Section "Vidéo et audio" -->
+            
+        </ul>
+    </div>
+</div>        
+					
+
+                    <!-- Ancre pour le "skiplink atteindreContenu" -->
+                    <div id="divAncreContenuPrincipal" class="skipLinks">
+                        <a name="ancreContenuPrincipal" id="ancreContenuPrincipal"></a>
+                    </div>
+
+                    <!-- Note sur les titres H1: dans ce gabarit, il y a 2 emplacements possibles pour le H1. Le cas
+						 le plus usuel est généré par défaut. Si necessaire, overrider dans la page ASPX -->
+			
+					<!-- PlaceHolder: permet d'afficher le titre sur les 2 colonnes. Cas plus rare. (default: vide) -->
+					
+
+					<!-- PlaceHolder: permet d'afficher le texte en dessus des colonnes -->
+					
+					
+					<div class="conteneurColonnesImbriquees">		
+                        <div class="colonneImbriquee imbGauche">
+
+							<!-- PlaceHolder: permet d'afficher le titre sur 1 colonne. Cas usuel. (default: s'affiche) -->
+							
+								
+
+<h1 class="">
+	<span id="ctl00_ColCentre_TitreSurUneColonne_TitrePrincipalContenu1_SiteMapPathTitreContenu"><span>Index du Journal des d&#233;bats</span></span></h1>
+    
+    
+							
+
+							<!-- PlaceHolder: contenu principal de la page (defaut: vide) -->
+							
+    
+    
+
+    
+		    <p>L'Index du Journal des débats donne accès au contenu des délibérations des parlementaires lors des séances de l'Assemblée et des séances de commissions parlementaires.</p>
+<p>Pour signaler une erreur ou obtenir de l’aide avec l’Index du Journal des débats, veuillez contacter la <a href="mailto:bibliotheque@assnat.qc.ca">Bibliothèque</a>.</p>			
+	    
+    <br />
+    <div class="criteresDeRecherche criteresAlignGauche indexJD">
+		<label class="labelOnTop" for="ctl00_ColCentre_ContenuColonneGauche_ddlSessionLegislature">Choisir une session</label>
+
+        <div class="floatLeft my-skinnable-select listeLegislatures" id="listeLegislatures">
+	        <select name="ctl00$ColCentre$ContenuColonneGauche$ddlSessionLegislature" id="ctl00_ColCentre_ContenuColonneGauche_ddlSessionLegislature">
+	<option selected="selected" value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/43-2.html" title="43e législature, 2e session (30 septembre 2025 - 8 avril 2026)">43e l&#233;gislature, 2e session (30 septembre 2025 - 8 avril 2026)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/43-1.html" title="43e législature, 1re session (29 novembre 2022 - 10 septembre 2025)">43e l&#233;gislature, 1re session (29 novembre 2022 - 10 septembre 2025)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/42-2.html" title="42e législature, 2e session (19 octobre 2021 - 28 août 2022)">42e l&#233;gislature, 2e session (19 octobre 2021 - 28 ao&#251;t 2022)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/42-1.html" title="42e législature, 1re session (27 novembre 2018 - 13 octobre 2021)">42e l&#233;gislature, 1re session (27 novembre 2018 - 13 octobre 2021)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/41-1.html" title="41e législature, 1re session (20 mai 2014 - 23 août 2018)">41e l&#233;gislature, 1re session (20 mai 2014 - 23 ao&#251;t 2018)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/40-1.html" title="40e législature, 1re session (30 octobre 2012 - 5 mars 2014)">40e l&#233;gislature, 1re session (30 octobre 2012 - 5 mars 2014)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/39-2.html" title="39e législature, 2e session (23 février 2011 - 1 août 2012)">39e l&#233;gislature, 2e session (23 f&#233;vrier 2011 - 1 ao&#251;t 2012)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/39-1.html" title="39e législature, 1re session (13 janvier 2009 - 22 février 2011)">39e l&#233;gislature, 1re session (13 janvier 2009 - 22 f&#233;vrier 2011)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/38-1.html" title="38e législature, 1re session (8 mai 2007 - 5 novembre 2008)">38e l&#233;gislature, 1re session (8 mai 2007 - 5 novembre 2008)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/37-2.html" title="37e législature, 2e session (14 mars 2006 - 21 février 2007)">37e l&#233;gislature, 2e session (14 mars 2006 - 21 f&#233;vrier 2007)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/37-1.html" title="37e législature, 1re session (4 juin 2003 - 10 mars 2006)">37e l&#233;gislature, 1re session (4 juin 2003 - 10 mars 2006)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/36-2.html" title="36e législature, 2e session (22 mars 2001 - 12 mars 2003)">36e l&#233;gislature, 2e session (22 mars 2001 - 12 mars 2003)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/36-1.html" title="36e législature, 1re session (2 mars 1999 - 9 mars 2001)">36e l&#233;gislature, 1re session (2 mars 1999 - 9 mars 2001)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/35-2.html" title="35e législature, 2e session (25 mars 1996 - 21 octobre 1998)">35e l&#233;gislature, 2e session (25 mars 1996 - 21 octobre 1998)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/35-1.html" title="35e législature, 1re session (29 novembre 1994 - 13 mars 1996)">35e l&#233;gislature, 1re session (29 novembre 1994 - 13 mars 1996)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/34-3.html" title="34e législature, 3e session (17 mars 1994 - 17 juin 1994)">34e l&#233;gislature, 3e session (17 mars 1994 - 17 juin 1994)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/34-2.html" title="34e législature, 2e session (19 mars 1992 - 10 mars 1994)">34e l&#233;gislature, 2e session (19 mars 1992 - 10 mars 1994)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/34-1.html" title="34e législature, 1re session (28 novembre 1989 - 18 mars 1992)">34e l&#233;gislature, 1re session (28 novembre 1989 - 18 mars 1992)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/33-2.html" title="33e législature, 2e session (8 mars 1988 - 9 août 1989)">33e l&#233;gislature, 2e session (8 mars 1988 - 9 ao&#251;t 1989)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/33-1.html" title="33e législature, 1re session (16 décembre 1985 - 8 mars 1988)">33e l&#233;gislature, 1re session (16 d&#233;cembre 1985 - 8 mars 1988)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/32-5.html" title="32e législature, 5e session (16 octobre 1984 - 10 octobre 1985)">32e l&#233;gislature, 5e session (16 octobre 1984 - 10 octobre 1985)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/32-4.html" title="32e législature, 4e session (23 mars 1983 - 20 juin 1984)">32e l&#233;gislature, 4e session (23 mars 1983 - 20 juin 1984)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/32-3.html" title="32e législature, 3e session (9 novembre 1981 - 10 mars 1983)">32e l&#233;gislature, 3e session (9 novembre 1981 - 10 mars 1983)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/32-2.html" title="32e législature, 2e session (30 septembre 1981 - 2 octobre 1981)">32e l&#233;gislature, 2e session (30 septembre 1981 - 2 octobre 1981)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/32-1.html" title="32e législature, 1re session (19 mai 1981 - 18 juin 1981)">32e l&#233;gislature, 1re session (19 mai 1981 - 18 juin 1981)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-6.html" title="31e législature, 6e session (5 novembre 1980 - 12 mars 1981)">31e l&#233;gislature, 6e session (5 novembre 1980 - 12 mars 1981)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-5.html" title="31e législature, 5e session (24 octobre 1980 - 24 octobre 1980)">31e l&#233;gislature, 5e session (24 octobre 1980 - 24 octobre 1980)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-4.html" title="31e législature, 4e session (6 mars 1979 - 18 juin 1980)">31e l&#233;gislature, 4e session (6 mars 1979 - 18 juin 1980)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-3.html" title="31e législature, 3e session (21 février 1978 - 20 février 1979)">31e l&#233;gislature, 3e session (21 f&#233;vrier 1978 - 20 f&#233;vrier 1979)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-2.html" title="31e législature, 2e session (8 mars 1977 - 22 décembre 1977)">31e l&#233;gislature, 2e session (8 mars 1977 - 22 d&#233;cembre 1977)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/31-1.html" title="31e législature, 1re session (14 décembre 1976 - 23 décembre 1976)">31e l&#233;gislature, 1re session (14 d&#233;cembre 1976 - 23 d&#233;cembre 1976)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/30-4.html" title="30e législature, 4e session (16 mars 1976 - 18 octobre 1976)">30e l&#233;gislature, 4e session (16 mars 1976 - 18 octobre 1976)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/30-3.html" title="30e législature, 3e session (18 mars 1975 - 19 décembre 1975)">30e l&#233;gislature, 3e session (18 mars 1975 - 19 d&#233;cembre 1975)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/30-2.html" title="30e législature, 2e session (14 mars 1974 - 28 décembre 1974)">30e l&#233;gislature, 2e session (14 mars 1974 - 28 d&#233;cembre 1974)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/30-1.html" title="30e législature, 1re session (22 novembre 1973 - 22 décembre 1973)">30e l&#233;gislature, 1re session (22 novembre 1973 - 22 d&#233;cembre 1973)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/29-4.html" title="29e législature, 4e session (15 mars 1973 - 25 septembre 1973)">29e l&#233;gislature, 4e session (15 mars 1973 - 25 septembre 1973)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/29-3.html" title="29e législature, 3e session (7 mars 1972 - 14 mars 1973)">29e l&#233;gislature, 3e session (7 mars 1972 - 14 mars 1973)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/29-2.html" title="29e législature, 2e session (23 février 1971 - 24 décembre 1971)">29e l&#233;gislature, 2e session (23 f&#233;vrier 1971 - 24 d&#233;cembre 1971)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/29-1.html" title="29e législature, 1re session (9 juin 1970 - 19 décembre 1970)">29e l&#233;gislature, 1re session (9 juin 1970 - 19 d&#233;cembre 1970)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/28-5.html" title="28e législature, 5e session (24 février 1970 - 12 mars 1970)">28e l&#233;gislature, 5e session (24 f&#233;vrier 1970 - 12 mars 1970)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/28-4.html" title="28e législature, 4e session (25 février 1969 - 23 décembre 1969)">28e l&#233;gislature, 4e session (25 f&#233;vrier 1969 - 23 d&#233;cembre 1969)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/28-3.html" title="28e législature, 3e session (20 février 1968 - 18 décembre 1968)">28e l&#233;gislature, 3e session (20 f&#233;vrier 1968 - 18 d&#233;cembre 1968)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/28-2.html" title="28e législature, 2e session (20 octobre 1967 - 20 octobre 1967)">28e l&#233;gislature, 2e session (20 octobre 1967 - 20 octobre 1967)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/28-1.html" title="28e législature, 1re session (1 décembre 1966 - 12 août 1967)">28e l&#233;gislature, 1re session (1 d&#233;cembre 1966 - 12 ao&#251;t 1967)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-6.html" title="27e législature, 6e session (25 janvier 1966 - 18 avril 1966)">27e l&#233;gislature, 6e session (25 janvier 1966 - 18 avril 1966)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-5.html" title="27e législature, 5e session (22 octobre 1965 - 23 octobre 1965)">27e l&#233;gislature, 5e session (22 octobre 1965 - 23 octobre 1965)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-4.html" title="27e législature, 4e session (21 janvier 1965 - 6 août 1965)">27e l&#233;gislature, 4e session (21 janvier 1965 - 6 ao&#251;t 1965)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-3.html" title="27e législature, 3e session (14 janvier 1964 - 31 juillet 1964)">27e l&#233;gislature, 3e session (14 janvier 1964 - 31 juillet 1964)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-2.html" title="27e législature, 2e session (21 août 1963 - 23 août 1963)">27e l&#233;gislature, 2e session (21 ao&#251;t 1963 - 23 ao&#251;t 1963)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/27-1.html" title="27e législature, 1re session (15 janvier 1963 - 11 juillet 1963)">27e l&#233;gislature, 1re session (15 janvier 1963 - 11 juillet 1963)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/26-2.html" title="26e législature, 2e session (10 novembre 1960 - 10 juin 1961)">26e l&#233;gislature, 2e session (10 novembre 1960 - 10 juin 1961)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/26-1.html" title="26e législature, 1re session (20 septembre 1960 - 22 septembre 1960)">26e l&#233;gislature, 1re session (20 septembre 1960 - 22 septembre 1960)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/25-4.html" title="25e législature, 4e session (18 novembre 1959 - 18 mars 1960)">25e l&#233;gislature, 4e session (18 novembre 1959 - 18 mars 1960)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/25-3.html" title="25e législature, 3e session (19 novembre 1958 - 5 mars 1959)">25e l&#233;gislature, 3e session (19 novembre 1958 - 5 mars 1959)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/25-2.html" title="25e législature, 2e session (13 novembre 1957 - 21 février 1958)">25e l&#233;gislature, 2e session (13 novembre 1957 - 21 f&#233;vrier 1958)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/25-1.html" title="25e législature, 1re session (14 novembre 1956 - 21 février 1957)">25e l&#233;gislature, 1re session (14 novembre 1956 - 21 f&#233;vrier 1957)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/24-4.html" title="24e législature, 4e session (16 novembre 1955 - 23 février 1956)">24e l&#233;gislature, 4e session (16 novembre 1955 - 23 f&#233;vrier 1956)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/20-1.html" title="20e législature, 1re session (7 octobre 1936 - 12 novembre 1936)">20e l&#233;gislature, 1re session (7 octobre 1936 - 12 novembre 1936)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/18-2.html" title="18e législature, 2e session (10 janvier 1933 - 13 avril 1933)">18e l&#233;gislature, 2e session (10 janvier 1933 - 13 avril 1933)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/18-1.html" title="18e législature, 1re session (3 novembre 1931 - 19 février 1932)">18e l&#233;gislature, 1re session (3 novembre 1931 - 19 f&#233;vrier 1932)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/17-2.html" title="17e législature, 2e session (8 janvier 1929 - 4 avril 1929)">17e l&#233;gislature, 2e session (8 janvier 1929 - 4 avril 1929)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/16-4.html" title="16e législature, 4e session (11 janvier 1927 - 1 avril 1927)">16e l&#233;gislature, 4e session (11 janvier 1927 - 1 avril 1927)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/16-3.html" title="16e législature, 3e session (7 janvier 1926 - 24 mars 1926)">16e l&#233;gislature, 3e session (7 janvier 1926 - 24 mars 1926)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/16-1.html" title="16e législature, 1re session (17 décembre 1923 - 15 mars 1924)">16e l&#233;gislature, 1re session (17 d&#233;cembre 1923 - 15 mars 1924)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/15-4.html" title="15e législature, 4e session (24 octobre 1922 - 29 décembre 1922)">15e l&#233;gislature, 4e session (24 octobre 1922 - 29 d&#233;cembre 1922)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/15-3.html" title="15e législature, 3e session (10 janvier 1922 - 21 mars 1922)">15e l&#233;gislature, 3e session (10 janvier 1922 - 21 mars 1922)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/15-2.html" title="15e législature, 2e session (11 janvier 1921 - 19 mars 1921)">15e l&#233;gislature, 2e session (11 janvier 1921 - 19 mars 1921)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/15-1.html" title="15e législature, 1re session (10 décembre 1919 - 14 février 1920)">15e l&#233;gislature, 1re session (10 d&#233;cembre 1919 - 14 f&#233;vrier 1920)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/14-3.html" title="14e législature, 3e session (21 janvier 1919 - 17 mars 1919)">14e l&#233;gislature, 3e session (21 janvier 1919 - 17 mars 1919)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/14-2.html" title="14e législature, 2e session (4 décembre 1917 - 9 février 1918)">14e l&#233;gislature, 2e session (4 d&#233;cembre 1917 - 9 f&#233;vrier 1918)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/14-1.html" title="14e législature, 1re session (7 novembre 1916 - 22 décembre 1916)">14e l&#233;gislature, 1re session (7 novembre 1916 - 22 d&#233;cembre 1916)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/13-4.html" title="13e législature, 4e session (11 janvier 1916 - 16 mars 1916)">13e l&#233;gislature, 4e session (11 janvier 1916 - 16 mars 1916)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/13-3.html" title="13e législature, 3e session (7 janvier 1915 - 5 mars 1915)">13e l&#233;gislature, 3e session (7 janvier 1915 - 5 mars 1915)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/13-2.html" title="13e législature, 2e session (11 novembre 1913 - 19 février 1914)">13e l&#233;gislature, 2e session (11 novembre 1913 - 19 f&#233;vrier 1914)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/13-1.html" title="13e législature, 1re session (5 novembre 1912 - 21 décembre 1912)">13e l&#233;gislature, 1re session (5 novembre 1912 - 21 d&#233;cembre 1912)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/12-4.html" title="12e législature, 4e session (9 janvier 1912 - 3 avril 1912)">12e l&#233;gislature, 4e session (9 janvier 1912 - 3 avril 1912)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/12-3.html" title="12e législature, 3e session (10 janvier 1911 - 24 mars 1911)">12e l&#233;gislature, 3e session (10 janvier 1911 - 24 mars 1911)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/12-2.html" title="12e législature, 2e session (15 mars 1910 - 4 juin 1910)">12e l&#233;gislature, 2e session (15 mars 1910 - 4 juin 1910)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/12-1.html" title="12e législature, 1re session (2 mars 1909 - 29 mai 1909)">12e l&#233;gislature, 1re session (2 mars 1909 - 29 mai 1909)</option>
+	<option value="https://www.assnat.qc.ca/fr/travaux-parlementaires/journaux-debats/index-jd/11-4.html" title="11e législature, 4e session (3 mars 1908 - 25 avril 1908)">11e l&#233;gislature, 4e session (3 mars 1908 - 25 avril 1908)</option>
+
+</select>
+	    </div>
+
+        <input type="button" id="btnRechercher" class="btnSoumettre" value="Rechercher" onclick="LoadSession(ctl00_ColCentre_ContenuColonneGauche_ddlSessionLegislature);"/>
+    </div>
+    
+ <div id="ctl00_ColCentre_ContenuColonneGauche_pnlContenu">
+	 
+
+    <div class="hr"><hr /></div>
+	    
+                <div>
+                    <ul class="listeIconesHorizontale floatRight">
+                        <li class="icoThesaurus">
+                            <a href="/thesaurus/mtwdk.exe?Session=jd43l2se">Thésaurus</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 style="float:left;">43e législature, 2e session (30 septembre 2025 - 8 avril 2026)</h2>
+                    <div style="clear:both;"></div>
+                </div>
+            
+
+    
+
+    <fieldset><legend>Sujets&nbsp;(thèmes abordés durant les débats)</legend>
+    
+            <br />
+            <h2>Sujets</h2>&nbsp;(thèmes abordés durant les débats)
+            <br />
+            <div class="criteresDeRecherche indexJD">
+        
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=1'>1</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=2'>2</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=a'>A</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=b'>B</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=c'>C</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=d'>D</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=e'>E</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=f'>F</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=g'>G</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=h'>H</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=i'>I</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=j'>J</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=k'>K</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=l'>L</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=m'>M</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=n'>N</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=o'>O</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=p'>P</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=q'>Q</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=r'>R</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=s'>S</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=t'>T</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=u'>U</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=v'>V</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=w'>W</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=sujets&amp;Requete=z'>Z</a>
+		
+    
+       <br />
+                <br />
+                <div class="rechercheMotCleIndexJDAvecInfoBulle">
+                <label for="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourSujet">Mots clés</label>
+                <input name="ctl00$ColCentre$ContenuColonneGauche$txtMotClePourSujet" type="text" id="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourSujet" title="(Ex. : agriculture, agri*) Voir l&#39;aide à la recherche au besoin." class="BulleInfo" style="width:400px;" />
+                    <input type="submit" name="ctl00$ColCentre$ContenuColonneGauche$ctl00" value="Rechercher" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ColCentre$ContenuColonneGauche$ctl00&quot;, &quot;&quot;, true, &quot;MotCleSujet&quot;, &quot;&quot;, false, false))" class="btnSoumettre btnSoumettreApresBulle" />
+                    <div style="clear:both;">&nbsp;</div>
+                </div>
+            </div>
+
+    
+    </fieldset>
+    
+    <fieldset><legend>Participants&nbsp;(thèmes abordés par chacun des parlementaires durant les débats)</legend>
+    
+            <br />
+            <h2>Participants</h2>&nbsp;(thèmes abordés par chacun des parlementaires durant les débats)
+            <br />
+            <div class="criteresDeRecherche indexJD">
+        
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=a'>A</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=b'>B</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=c'>C</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=d'>D</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=e'>E</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=f'>F</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=g'>G</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=h'>H</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=j'>J</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=k'>K</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=l'>L</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=m'>M</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=n'>N</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=p'>P</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=r'>R</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=s'>S</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=t'>T</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=particip&amp;Requete=z'>Z</a>
+		
+    
+       <br />
+                <br />
+                <div class="rechercheMotCleIndexJDAvecInfoBulle">
+                <label for="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourParticipant">Mots clés</label>
+                <input name="ctl00$ColCentre$ContenuColonneGauche$txtMotClePourParticipant" type="text" id="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourParticipant" title="Nom de l&#39;intervenant (ex. : Pelletier) ou mot clé (ex. : agriculture,  agri*). Voir l&#39;aide à la recherche." class="BulleInfo" style="width:400px;" />
+                    <input type="submit" name="ctl00$ColCentre$ContenuColonneGauche$ctl02" value="Rechercher" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ColCentre$ContenuColonneGauche$ctl02&quot;, &quot;&quot;, true, &quot;MotCleParticipant&quot;, &quot;&quot;, false, false))" class="btnSoumettre btnSoumettreApresBulle" />
+                    <div style="clear:both;">&nbsp;</div>
+                </div>
+            </div>
+
+    
+    </fieldset>
+
+    
+       <br />
+            <fieldset><legend>Projets de loi&nbsp;(étapes du processus législatif)</legend>
+            <h2>Projets de loi</h2> (étapes du processus législatif)
+            <br />
+       <div class="criteresDeRecherche indexJD">
+    
+    
+    <br />
+    
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_1-99'>1-99</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_100-199'>100-199</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_200-299'>200-299</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_300-399'>300-399</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_400-499'>400-499</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_500-599'>500-599</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_600-699'>600-699</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_700-799'>700-799</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_800-899'>800-899</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=projlois&amp;Requete=_900-999'>900-999</a>
+		
+    
+                <br />
+                <br />
+                <div class="rechercheMotCleIndexJDAvecInfoBulle">
+                <label for="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourProjetLoi">Mots clés</label>
+                <input name="ctl00$ColCentre$ContenuColonneGauche$txtMotClePourProjetLoi" type="text" id="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourProjetLoi" title="Numéro du projet de loi (ex. : 10) ou mot clé du titre (ex. : travail). Voir l&#39;aide à la recherche." class="BulleInfo" style="width:400px;" />
+                    <input type="submit" name="ctl00$ColCentre$ContenuColonneGauche$ctl04" value="Rechercher" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ColCentre$ContenuColonneGauche$ctl04&quot;, &quot;&quot;, true, &quot;MotCleProjetLois&quot;, &quot;&quot;, false, false))" class="btnSoumettre btnSoumettreApresBulle" />
+                    <div style="clear:both;">&nbsp;</div>
+                </div>
+            </div>
+
+    
+    
+    </fieldset>
+
+    <fieldset><legend>Commissions parlementaires&nbsp;(mandats réalisés par les commissions)</legend>
+    
+            <br />
+            <h2>Commissions parlementaires</h2>&nbsp;(mandats réalisés par les commissions)
+            <br />
+            <div class="criteresDeRecherche indexJD">
+        
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CAN'>CAN</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CAP'>CAP</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CAT'>CAT</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CCE'>CCE</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CET'>CET</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CFP'>CFP</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CI'>CI</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CRC'>CRC</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CSSS'>CSSS</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=v&amp;Session=jd43l2se&amp;Section=commissi&amp;Requete=_CTE'>CTE</a>
+		
+        
+    
+                <br />
+                <br />
+                <div class="rechercheMotCleIndexJDAvecInfoBulle">
+                <label for="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourCommission">Mots clés</label>
+                <input name="ctl00$ColCentre$ContenuColonneGauche$txtMotClePourCommission" type="text" id="ctl00_ColCentre_ContenuColonneGauche_txtMotClePourCommission" title="(Ex: agriculture ou agri*) Voir l&#39;aide à la recherche au besoin" class="BulleInfo" style="width:400px;" />
+                    <input type="submit" name="ctl00$ColCentre$ContenuColonneGauche$ctl08" value="Rechercher" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ColCentre$ContenuColonneGauche$ctl08&quot;, &quot;&quot;, true, &quot;MotCleCommission&quot;, &quot;&quot;, false, false))" class="btnSoumettre btnSoumettreApresBulle" />
+                    <div style="clear:both;">&nbsp;</div>
+                </div>
+
+    
+    
+    
+            <h2>Personnes ayant témoigné</h2> (comprend également les commissions plénières)
+            <br />
+        
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=sv&amp;Session=jd43l2se&amp;Section=temoigna&amp;Requete=b'>B</a>
+		
+            <a href='/fr/travaux-parlementaires/journaux-debats/index-jd/recherche.html?cat=sv&amp;Session=jd43l2se&amp;Section=temoigna&amp;Requete=p'>P</a>
+		
+
+        
+                </div>
+    
+    </fieldset>
+
+
+</div>  
+
+							
+						</div>
+						
+						<div class="colonneImbriquee imbDroite">
+						
+							<!-- PlaceHolder: contenu secondaire de la page (defaut: vide) -->
+							
+						</div>
+
+					</div>
+
+					<!-- PlaceHolder: permet d'afficher du texte en dessous des colonnes -->
+					
+
+					<!-- PlaceHolder: contenu en complement de la page -->
+					
+	
+	<div class="clear">&nbsp;</div>
+	<div class="hr"><hr /></div>
+	<h2 class="titreEnComplement">En complément</h2>
+
+		<ul class="ListeLien">
+<li><a href="https://www.assnat.qc.ca/fr/lien/12389.html">Description du contenu de l'Index du Journal des débats </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12385.html">Abréviations et sigles </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12387.html">Aide à la recherche du Journal des débats </a></li>
+<li><a href="https://www.assnat.qc.ca/fr/lien/12753.html">Index cumulatif 1867-1962 - Débats reconstitués de l’Assemblée législative (index des sujets) (PDF, 6,36 Mo)</a></li>
+</ul>			
+	
+
+
+
+
+				
+        </div>
+
+        <!-- N'est plus utilisee a cause des utilitaire d'assemblee qui doivent spanner col centre + col droite -->
+        <div class="ColDroite colonne"></div>
+
+        <div class="clear" id="ClearPiedPage"></div>
+
+        <!-- Bandeau lorsque la langue est différente que français -->
+        
+
+        <!-- PiedDePage: affiche le contenu du pied de page -->
+        
+
+<div id="PiedDePage" class="PiedDePage">
+    <div id="bInfolettre" style="margin-bottom: 25px;"><a class="btnInfolettre" href="https://l.communications.assnat.qc.ca/T/WF/24042/op0ace/Optin/fr-CA/Form.ofsys" target="_blank">Abonnez-vous à notre infolettre!</a></div>
+    <ul>
+        <li class="Premier">
+            <a href="/fr/fils-rss.html" class="sanssouligne icoFilsRss">
+                <span class="styleHyperlien">Fils RSS</span>
+            </a>
+        </li>
+        
+        <li><a href="/fr/liens-interet.html">Liens d'intérêt</a></li>
+        <li><a href="/fr/aide/index.html">Aide</a></li>
+        <li><a href="/fr/plan-site.html">Plan du site</a></li>
+        
+        <li><a href="/fr/propos-site/accessibilite.html">Accessibilité</a></li>
+        <li><a href="/fr/abc-assemblee/acces-information/index.html">Accès à l'information</a></li>
+    </ul>
+    <br />
+    <ul>
+        
+        <li class="Premier"><a href="/fr/propos-site/index.html">À propos du site</a> </li>
+        <li><a href="/fr/propos-site/droits-propriete-intellectuelle.html">Conditions d'utilisation</a></li>
+        <li><a href="/fr/propos-site/politique-confidentialite.html">Politique de confidentialité</a></li>
+        <li><a href="https://m.assnat.qc.ca">Mobile</a></li>
+    
+        
+            <li><a href="/en/travaux-parlementaires/journaux-debats/index-jd/43-2.html">English</a></li>
+        
+
+    </ul>
+
+    <br />
+    <span class="NonVisible">
+        
+                <ul>
+            
+                <li class="Premier">Date de la dernière modification : 19 juin 2013 </li>
+            
+                </ul>
+            
+    </span>
+</div>
+
+
+<script type="text/javascript">
+
+    //Forcer l'affichage du popup Didomi dans la langue de la page affichée au lieu du langage du fureteur de l'utilisateur
+    var langage = $('html').attr('lang');
+    var boutonInfolettre = document.getElementById('bInfolettre');
+
+    $(document).ready(function(){
+        if (langage == 'fr') {
+            window.didomiConfig = {
+                languages: {
+                    enabled: ['fr'],
+                    default: 'fr'
+                }
+            };
+            boutonInfolettre.style.display = 'block';
+        } else {
+            window.didomiConfig = {
+                languages: {
+                    enabled: ['en'],
+                    default: 'en'
+                }
+            };
+            boutonInfolettre.style.display = 'none';
+        }
+    })
+    
+</script>
+
+    </div>
+</form>
+
+
+    <script type="text/javascript">
+        function LoadSession(mySelect) {
+            var myValue = $(mySelect).val();
+            if (myValue != "") {
+                window.location = myValue;
+            }
+        } 
+	</script>
+
+</body>
+</html>

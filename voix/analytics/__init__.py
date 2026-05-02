@@ -1,0 +1,1 @@
+"""Indicateurs dérivés (présence, dissidence)."""
